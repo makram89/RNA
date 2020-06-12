@@ -13,8 +13,8 @@ class SingularChain:
 
 # Class to store RNA that script is currently computing
 class FullRNA:
-    # v=0 ->wynik z ContextFold bez konieczności usuwania ostaatnich dwóch nawiasów
-    # v=1 ->wynik z RNAFold
+    # v=0 ->dla wyników z ContextFold bez konieczności usuwania ostaatnich dwóch nawiasów
+    # v=1 ->dla wyników z RNAFold ( wymaga usunięcia ostaniego nawiasu)
     def __init__(self, input_file, v=1, output_file=False):
         self.version = v
         self.rna_chain_array = []
