@@ -67,7 +67,7 @@ class FullRNA:
                 # print(self.rna_dot_bracket_seq[first_idx:last_idx])
                 self.simple_chains.append(
                     SingularChain(len(self.simple_chains), self.rna_chain_array[first_idx:last_idx],
-                                  (first_idx, last_idx)))
+                                  (first_idx, last_idx-1)))
             else:
                 if value == '.':
                     dot = True
@@ -81,20 +81,14 @@ class FullRNA:
 def main(argv):
     input_file = open(argv.input_file, 'r')
 
-    # For future save_to file
-    # output_file = False
-    # output_file = open(argv.o, 'w')
-
     v = argv.version
     print("version {}".format(v))
-
     rna_object = FullRNA(input_file, v=v)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('input_file')
-    # parser.add_argument('-o', default=False)
     parser.add_argument('-v', '--version', type=int, default=1, choices=[0, 1])
     args = parser.parse_args()
     main(args)
