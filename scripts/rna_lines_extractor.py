@@ -11,6 +11,7 @@ class SingularChain:
     def __str__(self):
         return "ID: {id_r} \n{rna} \n{index} \n".format(id_r=self.chain_id, rna=self.rna_seq, index=self.indexes_tuple)
 
+
 # Class to store RNA that script is currently computing
 class FullRNA:
     # v=0 ->dla wyników z ContextFold bez konieczności usuwania ostaatnich dwóch nawiasów
@@ -26,11 +27,15 @@ class FullRNA:
         self.present_all()
 
     def read(self, input_file):
+        stage = 1
         for l_nr, line in enumerate(input_file):
-            if l_nr == 0:
+            if self.version == 2 and l_nr == 0:
+                continue
+            if stage == 1:
                 self.rna_chain_array = line[:-1]
+                stage += 1
             else:
-                if self.version == 1:
+                if self.version > 0:
                     self.rna_dot_bracket_seq = self.trim(line[:-1])
                 else:
 
@@ -67,7 +72,7 @@ class FullRNA:
                 # print(self.rna_dot_bracket_seq[first_idx:last_idx])
                 self.simple_chains.append(
                     SingularChain(len(self.simple_chains), self.rna_chain_array[first_idx:last_idx],
-                                  (first_idx, last_idx-1)))
+                                  (first_idx, last_idx - 1)))
             else:
                 if value == '.':
                     dot = True
@@ -89,6 +94,6 @@ def main(argv):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('input_file')
-    parser.add_argument('-v', '--version', type=int, default=1, choices=[0, 1])
+    parser.add_argument('-v', '--version', type=int, default=1, choices=[0, 1, 2])
     args = parser.parse_args()
     main(args)

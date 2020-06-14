@@ -1,0 +1,3 @@
+>sekwencja1
+CAAAAGUCUGGGCUAAGCCCACUGAUGAGCCGCUGAAAUGCGGCGAAACUUUUG
+(((((((..((((...))))........(((((......)))))...))))))) (g=1,th=0.5,e=-13.33)
