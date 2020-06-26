@@ -71,8 +71,8 @@ class FullRNA:
                 # print(self.rna_chain_array[first_idx:last_idx])
                 # print(self.rna_dot_bracket_seq[first_idx:last_idx])
                 self.simple_chains.append(
-                    SingularChain(len(self.simple_chains), self.rna_chain_array[first_idx:last_idx],
-                                  (first_idx, last_idx - 1)))
+                    SingularChain(len(self.simple_chains), self.rna_chain_array[first_idx if first_idx == 0 else first_idx-1:last_idx+1],
+                                  (first_idx if first_idx == 0 else first_idx-1, last_idx)))
             else:
                 if value == '.':
                     dot = True
@@ -91,6 +91,9 @@ def main(argv):
     rna_object = FullRNA(input_file, v=v)
 
 
+# Example of use
+# python rna_lines_extractor.py example.txt
+# Output is like (...) chain.
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('input_file')
