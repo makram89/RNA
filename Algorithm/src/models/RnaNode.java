@@ -17,13 +17,22 @@ public class RnaNode {
     private ArrayList sequences;
     public ArrayList<RnaNode> nextRnaNodes = new ArrayList<RnaNode>();
 
+
+
     public RnaNode(String inputChain){
 
 
 
     }
 
-    public void getSingleChains()
+    public void getSingleChains(){
+//        get chaisn via adapter
+//        Need letters ad dot-bracket
+    }
+
+    public void findCutPlaces(){
+
+    }
 
 
 }

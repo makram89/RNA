@@ -23,6 +23,7 @@ public class ScriptsAdapter {
         try {
             String command = "./src/rna_lines_extractor.py";
             String arg = " ./src/exampleOutputRNAFold.txt";
+
             Process p = Runtime.getRuntime().exec("python3 " + command + arg);
 
 //            ProcessBuilder pb = new ProcessBuilder("python3", command, "" + arg);
@@ -41,5 +42,18 @@ public class ScriptsAdapter {
             System.out.print("Bad luck!");
         }
         return new ArrayList();
+    }
+
+    public void folderXD() throws IOException {
+        Process p = Runtime.getRuntime().exec("RNAfold ./src/found_pre_mirs.fasta --noPS -otemp.txt");
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String ret = in.readLine();
+        System.out.println("value is : " + ret);
+        while ((ret = in.readLine()) != null) {
+            System.out.println("value is : " + ret);
+
+        }
+
     }
 }
