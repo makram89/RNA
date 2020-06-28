@@ -9,7 +9,7 @@ public class Main {
         System.out.println("Lets Play");
 
         FastaHandler temper = new FastaHandler("./found_pre_mirs.fasta");
-
+        System.out.println(temper.getEntry(0).toString());
 
 
     }
