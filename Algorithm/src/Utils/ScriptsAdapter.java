@@ -2,10 +2,8 @@ package Utils;
 
 import models.RNASingleChain;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 
@@ -46,30 +44,41 @@ public class ScriptsAdapter {
         return new ArrayList();
     }
 
-    private void createHelFile(String nChain, String dotChain) throws IOException {
+    public void createHelpFile(String nChain, String dotChain) throws IOException {
 //  Create file to help script use
 
         String fileSeparator = System.getProperty("file.separator");
 
-        //absolute file name with path
-        String absoluteFilePath = fileSeparator + "Users" + fileSeparator + "pankaj" + fileSeparator + "file.txt";
-        File file = new File(absoluteFilePath);
-        if (file.createNewFile()) {
-            System.out.println(absoluteFilePath + " File Created");
-        } else System.out.println("File " + absoluteFilePath + " already exists");
-
         //file name only
-        file = new File("file.txt");
+//        TODO make config with files name etc
+        File file = new File("DO_NOT_REMOVE_FILE");
         if (file.createNewFile()) {
-            System.out.println("file.txt File Created in Project root directory");
-        } else System.out.println("File file.txt already exists in the project root directory");
+            System.out.println("DO_NOT_REMOVE_FILE File Created in Project root directory");
+        } else {
+            System.out.println("File DO_NOT_REMOVE_FILE already exists in the project root directory");
+            System.out.println("Trunc...");
+            try (FileChannel outChan = new FileOutputStream(file, true).getChannel()) {
+                outChan.truncate(0);
+            }
+        }
 
-        //relative path
-        String relativePath = "tmp" + fileSeparator + "file.txt";
-        file = new File(relativePath);
-        if (file.createNewFile()) {
-            System.out.println(relativePath + " File Created in Project root directory");
-        } else System.out.println("File " + relativePath + " already exists in the project root directory");
+        BufferedWriter writer = null;
+        try {
+
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(nChain + "\n" + dotChain);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Close the writer regardless of what happens...
+                writer.close();
+            } catch (Exception e) {
+
+            }
+        }
+
+
     }
 
 
@@ -82,7 +91,7 @@ public class ScriptsAdapter {
         while ((ret = in.readLine()) != null) {
             System.out.println("value is : " + ret);
 
-        }
+        } 
 
     }
 }
