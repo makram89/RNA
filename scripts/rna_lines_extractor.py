@@ -9,7 +9,7 @@ class SingularChain:
         self.indexes_tuple = indexes_tuple
 
     def __str__(self):
-        return "ID: {id_r} \n{rna} \n{index} \n".format(id_r=self.chain_id, rna=self.rna_seq, index=self.indexes_tuple)
+        return "ID: {id_r} \n{rna} \n{index}".format(id_r=self.chain_id, rna=self.rna_seq, index=self.indexes_tuple)
 
 
 # Class to store RNA that script is currently computing
@@ -38,7 +38,6 @@ class FullRNA:
                 if self.version > 0:
                     self.rna_dot_bracket_seq = self.trim(line[:-1])
                 else:
-
                     self.rna_dot_bracket_seq = line[:-1]
 
                 # Break jest potrzebny ze względu na dodatkową linie w wyniku ContextFold
