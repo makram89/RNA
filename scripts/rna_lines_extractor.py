@@ -29,7 +29,7 @@ class FullRNA:
     def read(self, input_file):
         stage = 1
         for l_nr, line in enumerate(input_file):
-            if self.version == 2 and l_nr == 0:
+            if l_nr == 0 and line[0] == '>':
                 continue
             if stage == 1:
                 self.rna_chain_array = line[:-1]
