@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class FastaHandler {
 
-    private ArrayList<FastaEntry> entries = new ArrayList<FastaEntry>();
+    private ArrayList<FastaEntry> entries = new ArrayList<>();
     private final String filePath;
 
     /**

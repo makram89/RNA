@@ -3,11 +3,12 @@ import Utils.FastaHandler;
 import Utils.ScriptsAdapter;
 import Utils.ScriptsAdapterBuilder;
 import models.FastaEntry;
+import models.RnaNode;
 
-import java.io.IOException;
+
+import java.util.ArrayList;
 
 public class Main {
-
 
 
     public static void main(String[] args) {
@@ -19,18 +20,29 @@ public class Main {
         System.out.println(oneEntry.toString());
 
         final Config config = new Config();
-
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
-        try {
-            scriptsAdapter.createHelpFile(config.fasta_entry_file, oneEntry.name, oneEntry.chain);
-            scriptsAdapter.predictStructure();
-            scriptsAdapter.getSingleChains();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0);
+
+        ArrayList<RnaNode> outputFull = new ArrayList<>();
+        ArrayList<RnaNode> toProcess = new ArrayList<>();
+
+        ArrayList<RnaNode> toProcessPartial = new ArrayList<>();
+//        ArrayList<RnaNode> partialOutput = new ArrayList<>();
+
+        toProcess.add(startNode);
+        System.out.println(config.pairs.miValues.get("UA"));
+
+
+        while (toProcess.size() > 0 && false)
+        {
+            for (RnaNode rnaNode: toProcess) {
+//                TODO rnaNode.process();
+                toProcessPartial = rnaNode.getNext();
+                outputFull.addAll(rnaNode.getOutput());
+            }
+            toProcess = toProcessPartial;
         }
-
-
     }
 }
 

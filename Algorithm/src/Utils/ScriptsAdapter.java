@@ -130,9 +130,8 @@ public class ScriptsAdapter {
 
     }
 
-    public void createHelpFile(String fileName, String nChain, String dotChain) throws IOException {
+    public void createHelpFile(String fileName, String nChain) throws IOException {
 //  Create file to help script use
-
 
 //        TODO make config with files name etc
 //        String fileName = config.dot_bracket_file;
@@ -145,7 +144,8 @@ public class ScriptsAdapter {
         try {
 
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write(nChain + "\n" + dotChain);
+//            writer.write(nChain + "\n" + dotChain);
+            writer.write(nChain + "\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
