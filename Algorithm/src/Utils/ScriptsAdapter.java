@@ -5,6 +5,9 @@ import models.RNASingleChain;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class ScriptsAdapter {
@@ -20,17 +23,12 @@ public class ScriptsAdapter {
         version = ver;
     }
 
-    public ArrayList<RNASingleChain> getSingleChains(String input) {
-
+    /**
+     * TODO
+     */
+    public void showFile() {
         try {
-            String command = "./src/rna_lines_extractor.py";
-            String arg = config.dot_bracket_file;
-
-            Process p = Runtime.getRuntime().exec("python3 " + command + arg);
-
-//            ProcessBuilder pb = new ProcessBuilder("python3", command, "" + arg);
-//            Process p = pb.start();
-
+            Process p = Runtime.getRuntime().exec("python3 ");
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String ret = in.readLine();
             System.out.println("value is : " + ret);
@@ -38,12 +36,65 @@ public class ScriptsAdapter {
                 System.out.println("value is : " + ret);
 
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    /**
+     * Use of script that extract single chains with border prom predicted struct
+     *
+     * @return
+     */
+    public ArrayList<RNASingleChain> getSingleChains() {
+
+        ArrayList<RNASingleChain> score = new ArrayList<>();
+
+        try {
+            String command = config.python_script_path;
+//            String command = "./src/rna_lines_extractor.py ";
+            String arg = config.dot_bracket_file;
+
+            Process p = Runtime.getRuntime().exec("python3 " + command + " " + arg);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            RNASingleChain tempObject = new RNASingleChain();
+            String ret = in.readLine();
+            int lineNumber = 1;
+            while ((ret = in.readLine()) != null) {
+//                System.out.println(ret);
+                switch (lineNumber % 3) {
+                    case 1 -> tempObject.id = Integer.parseInt(ret.trim());
+                    case 2 -> tempObject.sequence = ret;
+                    case 0 -> {
+                        final Pattern patern = Pattern.compile("[0-9]+");
+                        CharSequence input;
+                        Matcher m = patern.matcher(ret);
+                        if (m.find()) {
+                            int value1 = Integer.parseInt(m.group(0).trim());
+                            m.find(m.end() + 1);
+                            int value2 = Integer.parseInt(m.group(0).trim());
+                            Integer array[] = {value1, value2};
+                            tempObject.indexes = array;
+
+//                            System.out.println(Arrays.toString(tempObject.indexes));
+                        }
+                        score.add(tempObject);
+                        tempObject = new RNASingleChain();
+                    }
+                }
+
+                lineNumber++;
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.print("Bad luck!");
         }
-        return new ArrayList();
+        System.out.println(score.size());
+        return score;
     }
 
     public void predictStructure() throws IOException {
@@ -57,17 +108,7 @@ public class ScriptsAdapter {
         String arg2 = config.fasta_entry_file;
         String arg3 = "-o" + config.dot_bracket_file;
 
-
         Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
-
-//        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//        String ret = in.readLine();
-//        System.out.println("value is : " + ret);
-//        while ((ret = in.readLine()) != null) {
-//            System.out.println("value is : " + ret);
-//
-//        }
-
     }
 
     public void createFile(String fileName) throws IOException {

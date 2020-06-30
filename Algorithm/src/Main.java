@@ -20,11 +20,12 @@ public class Main {
 
         final Config config = new Config();
 
-        ScriptsAdapter helper = new ScriptsAdapterBuilder().version(1).build();
+        ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
         try {
-            helper.createHelpFile(config.fasta_entry_file, oneEntry.name, oneEntry.chain);
+            scriptsAdapter.createHelpFile(config.fasta_entry_file, oneEntry.name, oneEntry.chain);
+            scriptsAdapter.predictStructure();
+            scriptsAdapter.getSingleChains();
 
-            helper.predictStructure();
         } catch (IOException e) {
             e.printStackTrace();
         }

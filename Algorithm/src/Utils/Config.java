@@ -7,6 +7,7 @@ public final class Config {
     public String fasta_entry_file = "DO_NOT_REMOVE_FILE_FASTA";
     public String dot_bracket_file = "DO_NOT_REMOVE_FILE";
     public String s_chain_file = "./DO_NOT_REMOVE_FILE_SINGLE";
+    public String python_script_path = "../scripts/rna_lines_extractor.py";
 
 
 }

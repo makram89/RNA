@@ -9,7 +9,7 @@ class SingularChain:
         self.indexes_tuple = indexes_tuple
 
     def __str__(self):
-        return "ID: {id_r} \n{rna} \n{index}".format(id_r=self.chain_id, rna=self.rna_seq, index=self.indexes_tuple)
+        return "{id_r} \n{rna} \n{index}".format(id_r=self.chain_id, rna=self.rna_seq, index=self.indexes_tuple)
 
 
 # Class to store RNA that script is currently computing
