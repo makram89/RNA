@@ -34,10 +34,10 @@ public class Main {
         System.out.println(config.pairs.miValues.get("UA"));
 
 
-        while (toProcess.size() > 0 && false)
+        while (toProcess.size() > 0)
         {
             for (RnaNode rnaNode: toProcess) {
-//                TODO rnaNode.process();
+                rnaNode.process();
                 toProcessPartial = rnaNode.getNext();
                 outputFull.addAll(rnaNode.getOutput());
             }

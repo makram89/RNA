@@ -131,14 +131,13 @@ public class ScriptsAdapter {
     }
 
     public void createHelpFile(String fileName, String nChain) throws IOException {
-//  Create file to help script use
 
+        //  Create file to help script use
 //        TODO make config with files name etc
 //        String fileName = config.dot_bracket_file;
 
         createFile(fileName);
         File file = new File(fileName);
-
 
         BufferedWriter writer = null;
         try {
