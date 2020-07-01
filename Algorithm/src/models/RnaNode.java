@@ -21,7 +21,7 @@ public class RnaNode {
     private final ScriptsAdapter scriptsAdapter;
 
     //    Może coż żebyt zwracać tylko siebie ??
-    private ArrayList<RnaNode> endNodes;
+    private Boolean endNode = false;
 
     private ArrayList<RnaNode> nextRnaNodes = new ArrayList<>();
     private ArrayList<RNASingleChain> rnaSingleChains;
@@ -44,16 +44,27 @@ public class RnaNode {
      */
     public void process() {
 
-        if (chain.length() <= config.minChainLength) {
-            endNodes.add(this);
+        if (chain.length() < config.minChainLength) {
+//            endNode.add(this);
+            endNode = true;
         } else {
             try {
 
                 scriptsAdapter.createHelpFile(config.fasta_entry_file, chain);
                 scriptsAdapter.predictStructure();
                 rnaSingleChains = scriptsAdapter.getSingleChains();
+//                System.out.println(rnaSingleChains.toString());
+                for( RNASingleChain fragment : rnaSingleChains)
+                {
+                    findCutPlaces(fragment);
 
-                System.out.println(rnaSingleChains.toString());
+                }
+                if (nextRnaNodes.size() ==0 )
+                {
+//                    endNode.add(this);
+                    endNode = true;
+                }
+
 
 
             } catch (IOException e) {
@@ -62,22 +73,60 @@ public class RnaNode {
         }
     }
 
-    public void getSingleChains() {
-//        get chaisn via adapter
-//        Need letters ad dot-bracket
-    }
+    public void findCutPlaces(RNASingleChain fragment) {
 
-    public void findCutPlaces() {
+        for(int i =1; i<fragment.sequence.length(); i++)
+        {
+            String pair = fragment.sequence.substring(i-1,i+1);
+            if ( config.pairs.miValues.get(pair) !=null)
+            {
+                double mi = (double) config.pairs.miValues.get(pair);
+                mi = mi * prevMiMeasure;
+//                System.out.println("Mi value: " + mi );
+                if(mi >= config.sigma)
+                {
 
+
+                    String nodeChain1 = chain.substring(0,i+fragment.indexes[0]);
+                    String nodeChain2 = chain.substring(i+fragment.indexes[0]);
+
+
+//                    System.out.println("Presenting new fragments");
+//                    System.out.println(nodeChain1);
+//                    System.out.println(nodeChain2);
+//                    System.out.println(pair);
+
+                    RnaNode node1 = new RnaNode(nodeChain1,stage+1,  chain.length(), mi);
+                    RnaNode node2 = new RnaNode(nodeChain2,stage+1,  chain.length(), mi);
+                    nextRnaNodes.add(node1);
+                    nextRnaNodes.add(node2);
+
+                }
+            }
+        }
     }
 
 
     public ArrayList<RnaNode> getNext() {
 
-        return new ArrayList();
+        return nextRnaNodes;
     }
 
-    public ArrayList<RnaNode> getOutput() {
-        return endNodes;
+    public RnaNode getOutput() {
+        return this;
+    }
+
+    public Boolean isEndNode(){
+        return endNode;
+    }
+
+    @Override
+    public String toString() {
+        return "RnaNode{" +
+                "chain='" + chain + '\'' +
+                ", stage=" + stage +
+                ", prevChainLength=" + prevChainLength +
+                ", prevMiMeasure=" + prevMiMeasure +
+                '}';
     }
 }

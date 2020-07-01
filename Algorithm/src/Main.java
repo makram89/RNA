@@ -13,9 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Lets Play");
 
-        FastaHandler temper = new FastaHandler("found_pre_mirs.fasta");
+        FastaHandler temper = new FastaHandler("found_pre_mirs2.fasta");
         FastaEntry oneEntry = temper.getEntry(0);
         System.out.println(oneEntry.toString());
 
@@ -31,17 +30,28 @@ public class Main {
 //        ArrayList<RnaNode> partialOutput = new ArrayList<>();
 
         toProcess.add(startNode);
-        System.out.println(config.pairs.miValues.get("UA"));
 
 
         while (toProcess.size() > 0)
         {
             for (RnaNode rnaNode: toProcess) {
                 rnaNode.process();
-                toProcessPartial = rnaNode.getNext();
-                outputFull.addAll(rnaNode.getOutput());
+                toProcessPartial.addAll(rnaNode.getNext());
+                if(rnaNode.isEndNode())
+                {
+                    outputFull.add(rnaNode.getOutput());
+                }
+
             }
             toProcess = toProcessPartial;
+            toProcessPartial = new ArrayList<>();
+        }
+//        summary
+        System.out.println("Initial chain length: " + oneEntry.chain.length());
+        System.out.println("Number of found degenerates: "+ outputFull.size());
+        for( var value : outputFull)
+        {
+            System.out.println(value.toString());
         }
     }
 }

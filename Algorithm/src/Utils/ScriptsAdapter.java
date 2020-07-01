@@ -93,7 +93,7 @@ public class ScriptsAdapter {
             e.printStackTrace();
             System.out.print("Bad luck!");
         }
-        System.out.println(score.size());
+//        System.out.println(score.size());
         return score;
     }
 
@@ -116,10 +116,10 @@ public class ScriptsAdapter {
         File file = new File(fileName);
 
         if (file.createNewFile()) {
-            System.out.println(fileName + " File Created in Project root directory");
+//            System.out.println(fileName + " File Created in Project root directory");
         } else {
-            System.out.println("File " + fileName + " already exists in the project root directory");
-            System.out.println("Trunc...");
+//            System.out.println("File " + fileName + " already exists in the project root directory");
+//            System.out.println("Trunc...");
 
             try (FileChannel outChan = new FileOutputStream(file, true).getChannel()) {
                 outChan.truncate(0);
