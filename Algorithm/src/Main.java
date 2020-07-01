@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        FastaHandler temper = new FastaHandler("found_pre_mirs2.fasta");
+        FastaHandler temper = new FastaHandler("found_pre_mirs.fasta");
         FastaEntry oneEntry = temper.getEntry(0);
         System.out.println(oneEntry.toString());
 

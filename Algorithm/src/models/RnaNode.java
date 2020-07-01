@@ -3,9 +3,13 @@ package models;
 import Utils.Config;
 import Utils.ScriptsAdapter;
 import Utils.ScriptsAdapterBuilder;
+import Utils.Sorter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import java.util.Collections;
+
 
 public class RnaNode {
 
@@ -40,7 +44,6 @@ public class RnaNode {
 
     /**
      * method that is obligated to make all proccesing
-     *
      */
     public void process() {
 
@@ -54,17 +57,14 @@ public class RnaNode {
                 scriptsAdapter.predictStructure();
                 rnaSingleChains = scriptsAdapter.getSingleChains();
 //                System.out.println(rnaSingleChains.toString());
-                for( RNASingleChain fragment : rnaSingleChains)
-                {
+                for (RNASingleChain fragment : rnaSingleChains) {
                     findCutPlaces(fragment);
 
                 }
-                if (nextRnaNodes.size() ==0 )
-                {
+                if (nextRnaNodes.size() == 0) {
 //                    endNode.add(this);
                     endNode = true;
                 }
-
 
 
             } catch (IOException e) {
@@ -75,20 +75,32 @@ public class RnaNode {
 
     public void findCutPlaces(RNASingleChain fragment) {
 
-        for(int i =1; i<fragment.sequence.length(); i++)
-        {
-            String pair = fragment.sequence.substring(i-1,i+1);
-            if ( config.pairs.miValues.get(pair) !=null)
-            {
+        ArrayList<Sorter> possibleCutsMi = new ArrayList<>();
+        for (int i = 1; i < fragment.sequence.length(); i++) {
+            String pair = fragment.sequence.substring(i - 1, i + 1);
+            if (config.pairs.miValues.get(pair) != null) {
                 double mi = (double) config.pairs.miValues.get(pair);
                 mi = mi * prevMiMeasure;
 //                System.out.println("Mi value: " + mi );
-                if(mi >= config.sigma)
-                {
+                if (mi >= config.sigma) {
+                    possibleCutsMi.add(new Sorter(i, mi));
+                }
+            }
+        }
 
 
-                    String nodeChain1 = chain.substring(0,i+fragment.indexes[0]);
-                    String nodeChain2 = chain.substring(i+fragment.indexes[0]);
+        Collections.sort(possibleCutsMi);
+        if(possibleCutsMi.size()>0) {
+            choose(possibleCutsMi.get(0), fragment);
+        }
+
+
+    }
+
+    public void choose(Sorter info, RNASingleChain fragment) {
+
+        String nodeChain1 = chain.substring(0, info.i + fragment.indexes[0]);
+        String nodeChain2 = chain.substring(info.i + fragment.indexes[0]);
 
 
 //                    System.out.println("Presenting new fragments");
@@ -96,14 +108,11 @@ public class RnaNode {
 //                    System.out.println(nodeChain2);
 //                    System.out.println(pair);
 
-                    RnaNode node1 = new RnaNode(nodeChain1,stage+1,  chain.length(), mi);
-                    RnaNode node2 = new RnaNode(nodeChain2,stage+1,  chain.length(), mi);
-                    nextRnaNodes.add(node1);
-                    nextRnaNodes.add(node2);
+        RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), info.mi);
+        RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), info.mi);
+        nextRnaNodes.add(node1);
+        nextRnaNodes.add(node2);
 
-                }
-            }
-        }
     }
 
 
@@ -116,7 +125,7 @@ public class RnaNode {
         return this;
     }
 
-    public Boolean isEndNode(){
+    public Boolean isEndNode() {
         return endNode;
     }
 
