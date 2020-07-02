@@ -109,8 +109,8 @@ public class RnaNode {
     }
 
     /**
-     *
-     * @param fragment
+     * Method takes single chain fragment and ranks nucleotides pairs in context of cut
+     * @param fragment Fragment that is currently computed
      */
     public void findCutPlaces(RNASingleChain fragment) {
 
@@ -136,6 +136,11 @@ public class RnaNode {
 
     }
 
+    /**
+     * Method to find best cut
+     * @param info
+     * @param fragment
+     */
     public void choose(Sorter info, RNASingleChain fragment) {
 
         String nodeChain1 = chain.substring(0, info.i + fragment.indexes[0]);
@@ -154,16 +159,27 @@ public class RnaNode {
 
     }
 
-
+    /**
+     *
+     * @return next possible nodes
+     */
     public ArrayList<RnaNode> getNext() {
 
         return nextRnaNodes;
     }
 
+    /**
+     *
+     * @return this node
+     */
     public RnaNode getOutput() {
         return this;
     }
 
+    /**
+     *
+     * @return is this node is an end node
+     */
     public Boolean isEndNode() {
         return endNode;
     }
