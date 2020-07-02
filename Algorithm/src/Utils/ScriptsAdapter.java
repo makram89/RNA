@@ -199,6 +199,8 @@ public class ScriptsAdapter {
             File file = new File(pathFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
+            writer.write(entry_params.name + "\n");
+            writer.write(entry_params.chain + "\n");
             for( RnaNode node : outputNodes)
             {
                 writer.write(node.toString());

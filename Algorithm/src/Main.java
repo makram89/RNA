@@ -20,7 +20,6 @@ public class Main {
 
         final Config config = new Config();
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
-        scriptsAdapter.createDirectory(config.folder_path);
 
         RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0);
 
@@ -29,12 +28,8 @@ public class Main {
         ArrayList<RnaNode> toProcess = new ArrayList<>();
 
         ArrayList<RnaNode> toProcessPartial = new ArrayList<>();
-//        ArrayList<RnaNode> partialOutput = new ArrayList<>();
-
-
 
         toProcess.add(startNode);
-
 
         while (toProcess.size() > 0)
         {
