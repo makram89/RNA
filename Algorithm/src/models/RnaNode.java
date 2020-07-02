@@ -40,13 +40,7 @@ public class RnaNode {
     private Double prevMiMeasure;
 
     /**
-     * class with functions used to contact with system
-     * <ul>
-     * <li> Loading and reading files</li>
-     * <li> Creating necessary files and cleaning them </li>
-     * <li> Saving results </li>
-     * <li> Using outsourced functions </li>
-     * </ul>
+     * @see Utils.ScriptsAdapter
      */
     private final ScriptsAdapter scriptsAdapter;
 

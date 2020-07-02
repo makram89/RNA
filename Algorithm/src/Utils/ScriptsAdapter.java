@@ -12,7 +12,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * class with functions used to contact with system
+ * <ul>
+ * <li> Loading and reading files</li>
+ * <li> Creating necessary files and cleaning them </li>
+ * <li> Saving results </li>
+ * <li> Using outsourced functions </li>
+ * </ul>
  */
 public class ScriptsAdapter {
 
@@ -27,24 +33,6 @@ public class ScriptsAdapter {
         version = ver;
     }
 
-    /**
-     * TODO
-     */
-    public void showFile() {
-        try {
-            Process p = Runtime.getRuntime().exec("python3 ");
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String ret = in.readLine();
-            System.out.println("value is : " + ret);
-            while ((ret = in.readLine()) != null) {
-                System.out.println("value is : " + ret);
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     /**
      * Use of script that extract single chains with border prom predicted struct
@@ -65,7 +53,7 @@ public class ScriptsAdapter {
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             RNASingleChain tempObject = new RNASingleChain();
-            String ret = in.readLine();
+            String ret;
             int lineNumber = 1;
             while ((ret = in.readLine()) != null) {
 //                System.out.println(ret);
@@ -140,10 +128,6 @@ public class ScriptsAdapter {
     }
 
     public void createHelpFile(String fileName, String nChain) throws IOException {
-
-        //  Create file to help script use
-//        TODO make config with files name etc
-//        String fileName = config.dot_bracket_file;
 
         createFile(fileName);
         File file = new File(fileName);
