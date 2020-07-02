@@ -7,9 +7,21 @@ package models;
  */
 public class FastaEntry {
 
+    /**
+     * Name of sequence
+     */
     public String name;
+    /**
+     * Sequence
+     */
     public String chain;
 
+    /**
+     * Constructor
+     *
+     * @param _name Name of sequence
+     * @param _chain Sequence
+     */
     public FastaEntry(String _name, String _chain) {
         this.name = _name;
         this.chain = _chain;

@@ -10,40 +10,74 @@ import java.util.ArrayList;
 
 import java.util.Collections;
 
-
+/**
+ * Class is used to create tree
+ *
+ */
 public class RnaNode {
-
+    /**
+     * Variable with config values
+     */
     final private Config config = new Config();
 
+    /**
+     * Input chain
+     * ex. ACUUCAGUCA
+     */
     private String chain;
+    /**
+     * Information in which level in tree structure this node is
+     * ex. entry node has stage = 1, next nodes/leafs that are created have stage = 2, etc.
+     */
     private Integer stage;
+    /**
+     * Length of fragment from which this node is created
+     */
     private Integer prevChainLength;
+    /**
+     * mi value of cut that creat this fragment
+     */
     private Double prevMiMeasure;
 
-    private String dotBracketChain;
-
+    /**
+     * class with functions used to contact with system
+     * <ul>
+     * <li> Loading and reading files</li>
+     * <li> Creating necessary files and cleaning them </li>
+     * <li> Saving results </li>
+     * <li> Using outsourced functions </li>
+     * </ul>
+     */
     private final ScriptsAdapter scriptsAdapter;
 
-    //    Może coż żebyt zwracać tylko siebie ??
+    /**
+     * Is this node end Node (leaf)
+     */
     private Boolean endNode = false;
-
+    /**
+     * Place to put fragments creating by cut
+     */
     private ArrayList<RnaNode> nextRnaNodes = new ArrayList<>();
-    private ArrayList<RNASingleChain> rnaSingleChains;
 
-
+    /**
+     * Node constructor
+     *
+     * @param chain Nucleotides chain to process
+     * @param stage Level in tree
+     * @param prevChainLength Length of fragment that was cut
+     * @param prevMiMeasure Mi value of cut that creates this node
+     */
     public RnaNode(String chain, Integer stage, Integer prevChainLength, Double prevMiMeasure) {
         this.chain = chain;
         this.stage = stage;
         this.prevChainLength = prevChainLength;
         this.prevMiMeasure = prevMiMeasure;
-
-
         scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
 
     }
 
     /**
-     * method that is obligated to make all proccesing
+     * method that is obligated to make all processing
      */
     public void process() {
 
@@ -55,7 +89,8 @@ public class RnaNode {
 
                 scriptsAdapter.createHelpFile(config.fasta_entry_file, chain);
                 scriptsAdapter.predictStructure();
-                rnaSingleChains = scriptsAdapter.getSingleChains();
+
+                ArrayList<RNASingleChain> rnaSingleChains = scriptsAdapter.getSingleChains();
 //                System.out.println(rnaSingleChains.toString());
                 for (RNASingleChain fragment : rnaSingleChains) {
                     findCutPlaces(fragment);
@@ -73,6 +108,10 @@ public class RnaNode {
         }
     }
 
+    /**
+     *
+     * @param fragment
+     */
     public void findCutPlaces(RNASingleChain fragment) {
 
         ArrayList<Sorter> possibleCutsMi = new ArrayList<>();

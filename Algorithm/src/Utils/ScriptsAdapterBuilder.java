@@ -1,5 +1,8 @@
 package Utils;
 
+/**
+ * Scripts adapter builder
+ */
 public class ScriptsAdapterBuilder {
 
     private Integer _version;

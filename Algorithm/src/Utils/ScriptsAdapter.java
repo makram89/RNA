@@ -66,9 +66,14 @@ public class ScriptsAdapter {
             while ((ret = in.readLine()) != null) {
 //                System.out.println(ret);
                 switch (lineNumber % 3) {
-                    case 1 -> tempObject.id = Integer.parseInt(ret.trim());
-                    case 2 -> tempObject.sequence = ret;
-                    case 0 -> {
+                    case 1:
+                        tempObject.id = Integer.parseInt(ret.trim());
+                        break;
+                    case 2:
+                        tempObject.sequence = ret;
+                        break;
+                    case 0:
+                        {
                         final Pattern patern = Pattern.compile("[0-9]+");
                         CharSequence input;
                         Matcher m = patern.matcher(ret);

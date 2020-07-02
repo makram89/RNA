@@ -2,13 +2,27 @@ package Utils;
 
 import models.Pair;
 
+/**
+ * Program config values
+ */
 public final class Config {
 
+    /**
+     * Path to dir with output
+     */
     public String folder_path = "./converting_dir";
 
+    /**
+     * file for pasting FASTA entry
+     */
     public String fasta_entry_file = "DO_NOT_REMOVE_FILE_FASTA";
+    /**
+     * file to paste data to python script
+     */
     public String dot_bracket_file = "DO_NOT_REMOVE_FILE";
-    public String s_chain_file = "./DO_NOT_REMOVE_FILE_SINGLE";
+    /**
+     * Path to place where script is stored
+     */
     public String python_script_path = "../scripts/rna_lines_extractor.py";
 
     public int minChainLength = 15;
@@ -16,11 +30,9 @@ public final class Config {
 
     public Pair pairs;
 
-    public Config(){
+    public Config() {
         pairs = new Pair();
     }
-
-
 
 
 }

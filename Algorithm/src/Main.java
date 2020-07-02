@@ -49,7 +49,7 @@ public class Main {
 //        summary
         System.out.println("Initial chain length: " + oneEntry.chain.length());
         System.out.println("Number of found degenerates: "+ outputFull.size());
-        for( var value : outputFull)
+        for(  RnaNode value : outputFull)
         {
             System.out.println(value.toString());
         }
