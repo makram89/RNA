@@ -122,16 +122,28 @@ public class RnaNode {
                 mi = mi * prevMiMeasure;
 //                System.out.println("Mi value: " + mi );
                 if (mi >= config.sigma) {
-                    possibleCutsMi.add(new Sorter(i, mi));
+//                    possibleCutsMi.add(new Sorter(i, mi));
+                    String nodeChain1 = chain.substring(0, i + fragment.indexes[0]);
+                    String nodeChain2 = chain.substring(i + fragment.indexes[0]);
+
+//                    System.out.println("Presenting new fragments");
+//                    System.out.println(nodeChain1);
+//                    System.out.println(nodeChain2);
+//                    System.out.println(pair);
+                    RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), mi);
+                    RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), mi);
+                    nextRnaNodes.add(node1);
+                    nextRnaNodes.add(node2);
+
                 }
             }
         }
 
 
-        Collections.sort(possibleCutsMi);
-        if(possibleCutsMi.size()>0) {
-            choose(possibleCutsMi.get(0), fragment);
-        }
+//        Collections.sort(possibleCutsMi);
+//        if(possibleCutsMi.size()>0) {
+//            choose(possibleCutsMi.get(0), fragment);
+//        }
 
 
     }
@@ -191,6 +203,6 @@ public class RnaNode {
                 ", stage=" + stage +
                 ", prevChainLength=" + prevChainLength +
                 ", prevMiMeasure=" + prevMiMeasure +
-                '}';
+                "}\n";
     }
 }

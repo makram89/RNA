@@ -14,20 +14,24 @@ public class Main {
     public static void main(String[] args) {
 
 
-        FastaHandler temper = new FastaHandler("found_pre_mirs.fasta");
+        FastaHandler temper = new FastaHandler("found_pre_mirs2.fasta");
         FastaEntry oneEntry = temper.getEntry(0);
         System.out.println(oneEntry.toString());
 
         final Config config = new Config();
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
+        scriptsAdapter.createDirectory(config.folder_path);
 
         RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0);
+
 
         ArrayList<RnaNode> outputFull = new ArrayList<>();
         ArrayList<RnaNode> toProcess = new ArrayList<>();
 
         ArrayList<RnaNode> toProcessPartial = new ArrayList<>();
 //        ArrayList<RnaNode> partialOutput = new ArrayList<>();
+
+
 
         toProcess.add(startNode);
 
@@ -49,10 +53,11 @@ public class Main {
 //        summary
         System.out.println("Initial chain length: " + oneEntry.chain.length());
         System.out.println("Number of found degenerates: "+ outputFull.size());
-        for(  RnaNode value : outputFull)
-        {
-            System.out.println(value.toString());
-        }
+//        for(  RnaNode value : outputFull)
+//        {
+//            System.out.println(value.toString());
+//        }
+        scriptsAdapter.saveOutput(oneEntry, outputFull, config.folder_path);
     }
 }
 

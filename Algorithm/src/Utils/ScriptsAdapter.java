@@ -1,6 +1,8 @@
 package Utils;
 
+import models.FastaEntry;
 import models.RNASingleChain;
+import models.RnaNode;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -9,7 +11,9 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ *
+ */
 public class ScriptsAdapter {
 
     public String[] ScriptName = {"RNAfold", "RNACentroid"};
@@ -45,7 +49,7 @@ public class ScriptsAdapter {
     /**
      * Use of script that extract single chains with border prom predicted struct
      *
-     * @return
+     * @return list of single chain fragments
      */
     public ArrayList<RNASingleChain> getSingleChains() {
 
@@ -160,6 +164,53 @@ public class ScriptsAdapter {
 
             }
         }
+
+    }
+
+    public void createDirectory(String fileName)
+    {
+        File theDir = new File(fileName);
+
+// if the directory does not exist, create it
+        if (!theDir.exists()) {
+            System.out.println("creating directory: " + theDir.getName());
+            boolean result = false;
+
+            try{
+                theDir.mkdir();
+                result = true;
+            }
+            catch(SecurityException se){
+                //handle it
+            }
+            if(result) {
+                System.out.println("DIR created");
+            }
+        }
+    }
+
+    public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir)
+    {
+        String pathFile = dir + "/" +entry_params.name.substring(1);
+
+        try {
+            createDirectory(dir);
+            createFile(pathFile);
+            File file = new File(pathFile);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            for( RnaNode node : outputNodes)
+            {
+                writer.write(node.toString());
+            }
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error with saving");
+            e.printStackTrace();
+        }
+
 
     }
 

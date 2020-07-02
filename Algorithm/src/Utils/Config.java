@@ -10,7 +10,7 @@ public final class Config {
     /**
      * Path to dir with output
      */
-    public String folder_path = "./converting_dir";
+    public String folder_path = "./output_dir";
 
     /**
      * file for pasting FASTA entry
