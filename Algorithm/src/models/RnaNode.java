@@ -1,9 +1,9 @@
 package models;
 
-import Utils.Config;
-import Utils.ScriptsAdapter;
-import Utils.ScriptsAdapterBuilder;
-import Utils.Sorter;
+import utils.Config;
+import utils.ScriptsAdapter;
+import utils.ScriptsAdapterBuilder;
+import utils.Sorter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class RnaNode {
     private Double prevMiMeasure;
 
     /**
-     * @see Utils.ScriptsAdapter
+     * @see utils.ScriptsAdapter
      */
     private final ScriptsAdapter scriptsAdapter;
 

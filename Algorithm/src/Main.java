@@ -1,7 +1,7 @@
-import Utils.Config;
-import Utils.FastaHandler;
-import Utils.ScriptsAdapter;
-import Utils.ScriptsAdapterBuilder;
+import utils.Config;
+import utils.FastaHandler;
+import utils.ScriptsAdapter;
+import utils.ScriptsAdapterBuilder;
 import models.FastaEntry;
 import models.RnaNode;
 
@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        FastaHandler temper = new FastaHandler("found_pre_mirs.fasta");
+        FastaHandler temper = new FastaHandler("found_pre_mirs2.fasta");
         FastaEntry oneEntry = temper.getEntry(0);
         System.out.println(oneEntry.toString());
 

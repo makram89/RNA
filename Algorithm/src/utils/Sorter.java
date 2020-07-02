@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 /**
  * Class used to store values each connection

@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import models.FastaEntry;
 import models.RNASingleChain;
@@ -7,7 +7,6 @@ import models.RnaNode;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -175,10 +174,12 @@ public class ScriptsAdapter {
 
     public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir)
     {
-        String pathFile = dir + "/" +entry_params.name.substring(1);
+        String pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1);
 
         try {
             createDirectory(dir);
+            createDirectory(dir + "/"+entry_params.name.substring(1));
+
             createFile(pathFile);
             File file = new File(pathFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));

@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 /**
  * Scripts adapter builder
