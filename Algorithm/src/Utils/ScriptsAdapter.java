@@ -73,8 +73,7 @@ public class ScriptsAdapter {
                             int value1 = Integer.parseInt(m.group(0).trim());
                             m.find(m.end() + 1);
                             int value2 = Integer.parseInt(m.group(0).trim());
-                            Integer array[] = {value1, value2};
-                            tempObject.indexes = array;
+                            tempObject.indexes = new Integer[]{value1, value2};
 
 //                            System.out.println(Arrays.toString(tempObject.indexes));
                         }
@@ -145,7 +144,7 @@ public class ScriptsAdapter {
                 // Close the writer regardless of what happens...
                 writer.close();
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
 

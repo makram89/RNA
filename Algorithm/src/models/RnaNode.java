@@ -144,8 +144,8 @@ public class RnaNode {
 
     /**
      * Method to find best cut
-     * @param info
-     * @param fragment
+     * @param info chosen place to cut
+     * @param fragment whole fragment
      */
     public void choose(Sorter info, RNASingleChain fragment) {
 
