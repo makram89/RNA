@@ -53,7 +53,8 @@ public class ScriptsAdapter {
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             RNASingleChain tempObject = new RNASingleChain();
-            String ret;
+//            It reads first line and jumps to sec
+            String ret = in.readLine();
             int lineNumber = 1;
             while ((ret = in.readLine()) != null) {
 //                System.out.println(ret);

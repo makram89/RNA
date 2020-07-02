@@ -23,7 +23,7 @@ public final class Pair {
     public Dictionary miValues;
 
     /**
-     * Constructor to initialize vlaues
+     * Constructor to initialize values
      */
     public Pair() {
 //        possiblePairs = new ArrayList<>(Arrays.asList("UA", "CA", "UC", "CC", "UG", "CG", "UU", "CU"));

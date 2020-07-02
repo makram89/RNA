@@ -49,7 +49,7 @@ public class RnaNode {
      */
     private Boolean endNode = false;
     /**
-     * Place to put fragments creating by cut
+     * List contains nodes for further processing, based on the current node
      */
     private ArrayList<RnaNode> nextRnaNodes = new ArrayList<>();
 
@@ -115,28 +115,31 @@ public class RnaNode {
                 double mi = (double) config.pairs.miValues.get(pair);
                 mi = mi * prevMiMeasure;
 //                System.out.println("Mi value: " + mi );
+//              Choosing if place is good enough
                 if (mi >= config.sigma) {
-//                    possibleCutsMi.add(new Sorter(i, mi));
-                    String nodeChain1 = chain.substring(0, i + fragment.indexes[0]);
-                    String nodeChain2 = chain.substring(i + fragment.indexes[0]);
-//                    System.out.println("Presenting new fragments");
-//                    System.out.println(nodeChain1);
-//                    System.out.println(nodeChain2);
-//                    System.out.println(pair);
-                    RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), mi);
-                    RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), mi);
-                    nextRnaNodes.add(node1);
-                    nextRnaNodes.add(node2);
-
+                    possibleCutsMi.add(new Sorter(i, mi));
                 }
             }
         }
 
+//chosing only best options
+        Collections.sort(possibleCutsMi);
+        double avrg = 0;
+        for (Sorter element : possibleCutsMi)
+        {
+            avrg+=element.mi;
+        }
+        avrg = avrg/possibleCutsMi.size();
+        for (Sorter element : possibleCutsMi)
+        {
 
-//        Collections.sort(possibleCutsMi);
-//        if(possibleCutsMi.size()>0) {
-//            choose(possibleCutsMi.get(0), fragment);
-//        }
+            if (element.mi >= avrg) {
+                choose(element, fragment);
+            }
+            else break;
+        }
+
+
 
 
     }
