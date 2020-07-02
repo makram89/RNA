@@ -119,7 +119,6 @@ public class RnaNode {
 //                    possibleCutsMi.add(new Sorter(i, mi));
                     String nodeChain1 = chain.substring(0, i + fragment.indexes[0]);
                     String nodeChain2 = chain.substring(i + fragment.indexes[0]);
-
 //                    System.out.println("Presenting new fragments");
 //                    System.out.println(nodeChain1);
 //                    System.out.println(nodeChain2);
