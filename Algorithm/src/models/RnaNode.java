@@ -17,7 +17,7 @@ public class RnaNode {
     /**
      * Variable with config values
      */
-    final private Config config = new Config();
+    private Config config;
 
     /**
      * Input chain
@@ -57,6 +57,7 @@ public class RnaNode {
      */
     private final int index ;
 
+
     /**
      * Node constructor
      *
@@ -66,13 +67,15 @@ public class RnaNode {
      * @param prevMiMeasure Mi value of cut that creates this node
      * @param _index index where sequence starts in original chain
      */
-    public RnaNode(String chain, Integer stage, Integer prevChainLength, Double prevMiMeasure, int _index) {
+    public RnaNode(String chain, Integer stage, Integer prevChainLength, Double prevMiMeasure, int _index, Config _config) {
         this.chain = chain;
         this.stage = stage;
         this.prevChainLength = prevChainLength;
         this.prevMiMeasure = prevMiMeasure;
         this.index = _index;
-        scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
+        this.config = _config;
+        scriptsAdapter = new ScriptsAdapterBuilder().version(config.version).build();
+
 
     }
 
@@ -165,8 +168,8 @@ public class RnaNode {
 //                    System.out.println(nodeChain2);
 //                    System.out.println(pair);
 
-        RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), info.mi, index);
-        RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), info.mi, index + info.i + fragment.indexes[0]);
+        RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), info.mi, index, config);
+        RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), info.mi, index + info.i + fragment.indexes[0],config);
         nextRnaNodes.add(node1);
         nextRnaNodes.add(node2);
 

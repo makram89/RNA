@@ -7,19 +7,35 @@ import java.util.ArrayList;
 
 public class Main {
 
-
     public static void main(String[] args) {
 
 
         FastaHandler temper = new FastaHandler("found_pre_mirs2.fasta");
         FastaEntry oneEntry = temper.getEntry(0);
         System.out.println(oneEntry.toString());
+        Main main = new Main();
+
+        main.run(oneEntry);
+
+
+    }
+
+    public void run( FastaEntry oneEntry)
+    {
 
         final Config config = new Config();
         OutputManager outputManager = new OutputManager();
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
 
-        RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0, 0);
+        /**
+         * oneEntry is passed entry with its name and cain. we wat to pass only chain
+         * Stage 1 because it is starting node
+         * we need to supply initial length by using its length
+         * start mi should be 1
+         * index 0, because it is start
+         * config file with all chosen options
+         */
+        RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0, 0, config);
 
 
         /**
@@ -59,8 +75,6 @@ public class Main {
 
 
         String unit = " msec";
-
-
         if (elapsedTime >= 1_000) {
             elapsedTime = elapsedTime / 1_000.0;
             unit = " sec";
@@ -85,6 +99,9 @@ public class Main {
 
 
         scriptsAdapter.saveOutput(oneEntry, outputManager.filterByLength(outputFull,config.lowerLengthBound), config.folder_path);
+
+        outputManager.countOcurrencies(outputFull);
+
     }
 }
 

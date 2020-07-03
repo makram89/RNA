@@ -198,6 +198,10 @@ public class ScriptsAdapter {
             e.printStackTrace();
         }
 
+    }
+
+    public void saveSummary(FastaEntry entry_params, ArrayList<SequenceContainer> summarized , String dir)
+    {
 
     }
 

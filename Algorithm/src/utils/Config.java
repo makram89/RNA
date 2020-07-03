@@ -42,6 +42,17 @@ public final class Config {
      */
     public int upperLengthBound = 50;
 
+    /**
+     * ver
+     * ver 1 - RNA fold
+     */
+    public int version = 1;
+
+    boolean isLowerFilter = false;
+    boolean isUpperFilter = false;
+
+    boolean cutByAverage = true;
+
 
     public Config() {
     }
