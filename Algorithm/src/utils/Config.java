@@ -35,7 +35,7 @@ public final class Config {
     /**
      * For filtering
      */
-    public int minimalLengthBound = 5;
+    public int lowerLengthBound = 5;
 
     /**
      * for filtering

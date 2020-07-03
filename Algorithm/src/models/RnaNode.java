@@ -23,20 +23,20 @@ public class RnaNode {
      * Input chain
      * ex. ACUUCAGUCA
      */
-    private String chain;
+    private final String chain;
     /**
      * Information in which level in tree structure this node is
      * ex. entry node has stage = 1, next nodes/leafs that are created have stage = 2, etc.
      */
-    private Integer stage;
+    private final Integer stage;
     /**
      * Length of fragment from which this node is created
      */
-    private Integer prevChainLength;
+    private final Integer prevChainLength;
     /**
      * mi value of cut that creat this fragment
      */
-    private Double prevMiMeasure;
+    private final Double prevMiMeasure;
 
     /**
      * @see utils.ScriptsAdapter
@@ -50,12 +50,12 @@ public class RnaNode {
     /**
      * List contains nodes for further processing, based on the current node
      */
-    private ArrayList<RnaNode> nextRnaNodes = new ArrayList<>();
+    private final ArrayList<RnaNode> nextRnaNodes = new ArrayList<>();
 
     /**
      * Index where analyzed fragment starts
      */
-    private int index ;
+    private final int index ;
 
     /**
      * Node constructor
@@ -113,7 +113,7 @@ public class RnaNode {
      */
     public void findCutPlaces(RNASingleChain fragment) {
 
-        ArrayList<Sorter> possibleCutsMi = new ArrayList<>();
+        ArrayList<NucleotidesBinding> possibleCutsMi = new ArrayList<>();
         for (int i = 1; i < fragment.sequence.length(); i++) {
             String pair = fragment.sequence.substring(i - 1, i + 1);
             if (config.pairs.miValues.get(pair) != null) {
@@ -122,7 +122,7 @@ public class RnaNode {
 //                System.out.println("Mi value: " + mi );
 //              Choosing if place is good enough
                 if (mi >= config.sigma) {
-                    possibleCutsMi.add(new Sorter(i, mi));
+                    possibleCutsMi.add(new NucleotidesBinding(i, mi));
                 }
             }
         }
@@ -130,12 +130,12 @@ public class RnaNode {
 //chosing only best options
         Collections.sort(possibleCutsMi);
         double avrg = 0;
-        for (Sorter element : possibleCutsMi)
+        for (NucleotidesBinding element : possibleCutsMi)
         {
             avrg+=element.mi;
         }
         avrg = avrg/possibleCutsMi.size();
-        for (Sorter element : possibleCutsMi)
+        for (NucleotidesBinding element : possibleCutsMi)
         {
 
             if (element.mi >= avrg) {
@@ -154,7 +154,7 @@ public class RnaNode {
      * @param info chosen place to cut
      * @param fragment whole fragment
      */
-    public void choose(Sorter info, RNASingleChain fragment) {
+    public void choose(NucleotidesBinding info, RNASingleChain fragment) {
 
         String nodeChain1 = chain.substring(0, info.i + fragment.indexes[0]);
         String nodeChain2 = chain.substring(info.i + fragment.indexes[0]);
@@ -206,5 +206,18 @@ public class RnaNode {
                 ", prevMiMeasure=" + prevMiMeasure +
                 ", index=" + index +
                 "}\n";
+    }
+
+    public String getChain(){
+
+        return this.chain;
+    }
+
+    public int getLength(){
+        return this.chain.length();
+    }
+
+    public Double getPrevMiMeasure(){
+        return prevMiMeasure;
     }
 }

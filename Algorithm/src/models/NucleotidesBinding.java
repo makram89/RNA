@@ -3,7 +3,7 @@ package models;
 /**
  * Class used to store values each connection
  */
-public class Sorter implements Comparable<Sorter>{
+public class NucleotidesBinding implements Comparable<NucleotidesBinding>{
     /**
      * Index in currently computed fragment
      */
@@ -13,7 +13,7 @@ public class Sorter implements Comparable<Sorter>{
      */
     public double mi;
 
-    public Sorter(int _i, double _mi) {
+    public NucleotidesBinding(int _i, double _mi) {
         i = _i;
         mi = _mi;
     }
@@ -29,7 +29,7 @@ public class Sorter implements Comparable<Sorter>{
 
 
     @Override
-    public int compareTo(Sorter o) {
+    public int compareTo(NucleotidesBinding o) {
         return mi < o.mi ? 1 : -1;
     }
 }

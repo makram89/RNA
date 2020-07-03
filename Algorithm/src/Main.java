@@ -1,7 +1,4 @@
-import utils.Config;
-import utils.FastaHandler;
-import utils.ScriptsAdapter;
-import utils.ScriptsAdapterBuilder;
+import utils.*;
 import models.FastaEntry;
 import models.RnaNode;
 
@@ -19,6 +16,7 @@ public class Main {
         System.out.println(oneEntry.toString());
 
         final Config config = new Config();
+        OutputManager outputManager = new OutputManager();
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
 
         RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0, 0);
@@ -85,11 +83,8 @@ public class Main {
         System.out.println("Initial chain length: " + oneEntry.chain.length());
         System.out.println("Number of found degradants: " + outputFull.size());
 
-//        for(  RnaNode value : outputFull)
-//        {
-//            System.out.println(value.toString());
-//        }
-        scriptsAdapter.saveRAWOutput(oneEntry, outputFull, config.folder_path);
+
+        scriptsAdapter.saveOutput(oneEntry, outputManager.filterByLength(outputFull,config.lowerLengthBound), config.folder_path);
     }
 }
 
