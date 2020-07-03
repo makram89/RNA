@@ -200,9 +200,33 @@ public class ScriptsAdapter {
 
     }
 
-    public void saveSummary(FastaEntry entry_params, ArrayList<SequenceContainer> summarized , String dir)
+    public void saveSummary(FastaEntry entry_params, ArrayList<SequenceContainer> summarizedNodes , String dir)
     {
+        String pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1);
 
+        try {
+            createDirectory(dir);
+            createDirectory(dir + "/"+entry_params.name.substring(1));
+            pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1)+"_summary";
+
+            createFile(pathFile);
+            File file = new File(pathFile);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            writer.write(entry_params.name + "\n");
+            writer.write(entry_params.chain + "\n");
+
+            for( SequenceContainer node : summarizedNodes)
+            {
+                writer.write(node.toString());
+            }
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error with saving");
+            e.printStackTrace();
+        }
     }
 
 

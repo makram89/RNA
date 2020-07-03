@@ -10,12 +10,20 @@ public class Main {
     public static void main(String[] args) {
 
 
-        FastaHandler temper = new FastaHandler("found_pre_mirs2.fasta");
-        FastaEntry oneEntry = temper.getEntry(0);
-        System.out.println(oneEntry.toString());
+        FastaHandler fastaHandler = new FastaHandler("found_pre_mirs.fasta");
+
+//        FastaEntry oneEntry = fastaHandler.getEntry(0);
+//        System.out.println(oneEntry.toString());
+
         Main main = new Main();
 
-        main.run(oneEntry);
+        for(FastaEntry entry : fastaHandler.getEntries())
+        {
+            System.out.println(entry.toString());
+            main.run(entry);
+        }
+
+
 
 
     }
@@ -98,9 +106,15 @@ public class Main {
         System.out.println("Number of found degradants: " + outputFull.size());
 
 
-        scriptsAdapter.saveOutput(oneEntry, outputManager.filterByLength(outputFull,config.lowerLengthBound), config.folder_path);
+        scriptsAdapter.saveOutput(oneEntry, outputManager.sortByMi(outputFull), config.folder_path);
 
-        outputManager.countOcurrencies(outputFull);
+//        scriptsAdapter.saveOutput(oneEntry, outputManager.filterByLength(outputFull,config.lowerLengthBound), config.folder_path);
+
+        scriptsAdapter.saveSummary(oneEntry, outputManager.countOcurrencies(outputFull), config.folder_path);
+
+
+
+
 
     }
 }

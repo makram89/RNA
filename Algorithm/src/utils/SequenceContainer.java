@@ -12,8 +12,8 @@ public class SequenceContainer implements Comparable<SequenceContainer> {
 
     @Override
     public String toString() {
-        return "chain: '" + chain + '\'' +
-                ", occurred" + counter + "\n" ;
+        return "SEQ: '" + chain + '\'' +
+                " occurred " + counter + "\n" ;
 
     }
 
