@@ -14,39 +14,13 @@ class SingularChain:
 
 # Class to store RNA that script is currently computing
 class FullRNA:
-    # v=0 ->dla wyników z ContextFold bez konieczności usuwania ostaatnich dwóch nawiasów
-    # v=1 ->dla wyników z RNAFold ( wymaga usunięcia ostaniego nawiasu)
-    def __init__(self, input_file, v=1, output_file=False):
-        self.version = v
-        self.rna_chain_array = []
-        self.rna_dot_bracket_seq = []
+    def __init__(self, input_chain, input_dot):
+        self.rna_chain_array = input_chain
+        self.rna_dot_bracket_seq = input_dot
 
         self.simple_chains = []
-        self.read(input_file)
         self.find_singular_chains()
         self.present_all()
-
-    def read(self, input_file):
-        stage = 1
-        for l_nr, line in enumerate(input_file):
-            if l_nr == 0 and line[0] == '>':
-                continue
-            if stage == 1:
-                self.rna_chain_array = line[:-1]
-                stage += 1
-            else:
-                if self.version > 0:
-                    self.rna_dot_bracket_seq = self.trim(line[:-1])
-                else:
-                    self.rna_dot_bracket_seq = line[:-1]
-
-                # Break jest potrzebny ze względu na dodatkową linie w wyniku ContextFold
-                # Jeśli pojawią się bardziej zaawansofane formaty, będzie trzeba to poprawić
-                break
-
-        # Presenting steps
-        # print(self.rna_chain_array)
-        # print(self.rna_dot_bracket_seq)
 
     @staticmethod
     def trim(input_string):
@@ -83,11 +57,10 @@ class FullRNA:
 
 
 def main(argv):
-    input_file = open(argv.input_file, 'r')
+    input_file = argv.input_file
+    input_dot = argv.input_dot
 
-    v = argv.version
-    print("version {}".format(v))
-    rna_object = FullRNA(input_file, v=v)
+    rna_object = FullRNA(input_file, input_dot)
 
 
 # Example of use
@@ -96,6 +69,6 @@ def main(argv):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file')
-    parser.add_argument('-v', '--version', type=int, default=1, choices=[0, 1, 2])
+    parser.add_argument('input_dot')
     args = parser.parse_args()
     main(args)
