@@ -33,7 +33,9 @@ class FullRNA:
         dot = False
         for i, value in enumerate(self.rna_dot_bracket_seq):
             if dot:
-                if value == '.':
+                if value == '.' and i == len(self.rna_dot_bracket_seq) - 1:
+                    last_idx = i
+                elif value == '.':
                     continue
                 elif i == len(self.rna_dot_bracket_seq) - 1:
                     last_idx = i
