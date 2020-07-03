@@ -30,10 +30,20 @@ public final class Config {
     public int minChainLength = 15;
     public double sigma = 0.01;
 
-    public Pair pairs;
+    public Pair pairs = new Pair();
+
+    /**
+     * For filtering
+     */
+    public int minimalLengthBound = 5;
+
+    /**
+     * for filtering
+     */
+    public int upperLengthBound = 50;
+
 
     public Config() {
-        pairs = new Pair();
     }
 
 

@@ -21,7 +21,7 @@ public class Main {
         final Config config = new Config();
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
 
-        RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0);
+        RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0, 0);
 
 
         /**
@@ -51,8 +51,7 @@ public class Main {
                 rnaNode.process();
                 toProcessPartial.addAll(rnaNode.getNext());
                 if (rnaNode.isEndNode()) {
-                    outputFull.add(rnaNode.getOutput());
-                }
+                    outputFull.add(rnaNode.getOutput()); }
 
             }
             toProcess = toProcessPartial;
@@ -84,12 +83,13 @@ public class Main {
 
 //        summary
         System.out.println("Initial chain length: " + oneEntry.chain.length());
-        System.out.println("Number of found degenerates: " + outputFull.size());
+        System.out.println("Number of found degradants: " + outputFull.size());
+
 //        for(  RnaNode value : outputFull)
 //        {
 //            System.out.println(value.toString());
 //        }
-        scriptsAdapter.saveOutput(oneEntry, outputFull, config.folder_path);
+        scriptsAdapter.saveRAWOutput(oneEntry, outputFull, config.folder_path);
     }
 }
 

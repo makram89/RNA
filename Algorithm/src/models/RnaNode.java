@@ -3,7 +3,6 @@ package models;
 import utils.Config;
 import utils.ScriptsAdapter;
 import utils.ScriptsAdapterBuilder;
-import utils.Sorter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,18 +53,25 @@ public class RnaNode {
     private ArrayList<RnaNode> nextRnaNodes = new ArrayList<>();
 
     /**
+     * Index where analyzed fragment starts
+     */
+    private int index ;
+
+    /**
      * Node constructor
      *
      * @param chain Nucleotides chain to process
      * @param stage Level in tree
      * @param prevChainLength Length of fragment that was cut
      * @param prevMiMeasure Mi value of cut that creates this node
+     * @param _index index where sequence starts in original chain
      */
-    public RnaNode(String chain, Integer stage, Integer prevChainLength, Double prevMiMeasure) {
+    public RnaNode(String chain, Integer stage, Integer prevChainLength, Double prevMiMeasure, int _index) {
         this.chain = chain;
         this.stage = stage;
         this.prevChainLength = prevChainLength;
         this.prevMiMeasure = prevMiMeasure;
+        this.index = _index;
         scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
 
     }
@@ -91,7 +97,6 @@ public class RnaNode {
 
                 }
                 if (nextRnaNodes.size() == 0) {
-//                    endNode.add(this);
                     endNode = true;
                 }
 
@@ -160,8 +165,8 @@ public class RnaNode {
 //                    System.out.println(nodeChain2);
 //                    System.out.println(pair);
 
-        RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), info.mi);
-        RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), info.mi);
+        RnaNode node1 = new RnaNode(nodeChain1, stage + 1, chain.length(), info.mi, index);
+        RnaNode node2 = new RnaNode(nodeChain2, stage + 1, chain.length(), info.mi, index + info.i + fragment.indexes[0]);
         nextRnaNodes.add(node1);
         nextRnaNodes.add(node2);
 
@@ -199,6 +204,7 @@ public class RnaNode {
                 ", stage=" + stage +
                 ", prevChainLength=" + prevChainLength +
                 ", prevMiMeasure=" + prevMiMeasure +
+                ", index=" + index +
                 "}\n";
     }
 }

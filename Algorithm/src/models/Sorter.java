@@ -1,4 +1,4 @@
-package utils;
+package models;
 
 /**
  * Class used to store values each connection
