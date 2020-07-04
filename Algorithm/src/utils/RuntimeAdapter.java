@@ -185,8 +185,8 @@ public class RuntimeAdapter {
             File file = new File(pathFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-            writer.write(entry_params.name + "\n");
-            writer.write(entry_params.chain + "\n");
+//            writer.write(entry_params.name + "\n");
+//            writer.write(entry_params.chain + "\n");
 
             writer.write("["+ "\n");
 
@@ -228,8 +228,9 @@ public class RuntimeAdapter {
             File file = new File(pathFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-            writer.write(entry_params.name + "\n");
-            writer.write(entry_params.chain + "\n");
+//            writer.write(entry_params.name + "\n");
+//            writer.write(entry_params.chain + "\n");
+
             writer.write("["+ "\n");
             boolean flag = false;
             for( SequenceContainer node : summarizedNodes)

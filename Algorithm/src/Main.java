@@ -14,7 +14,7 @@ public class Main {
 
         Config config = new Config();
 
-        /**
+        /*
          * -v version default 1, 0 changes from RNAfold to ContextFold
          * -ML minimal length of sequence to process, ex. -ML 15 means that sequences shorter then 15 becomes endNodes without processing
          * -e set sigma (limit value)
@@ -26,46 +26,37 @@ public class Main {
          */
         for (int i = 1; i < args.length; i++) {
 
-            if (args[i].equals("-v"))
-            {
-                if (Integer.parseInt(args[i+1]) == 0 )
-                {
+            if (args[i].equals("-v")) {
+                if (Integer.parseInt(args[i + 1]) == 0) {
                     config.version = 0;
                 }
                 continue;
             }
-            if(args[i].equals("-LB"))
-            {
-                config.lowerLengthBound = Integer.parseInt(args[i+1]);
+            if (args[i].equals("-LB")) {
+                config.lowerLengthBound = Integer.parseInt(args[i + 1]);
                 config.isLowerFilter = true;
                 continue;
             }
-            if(args[i].equals("-HB"))
-            {
-                config.upperLengthBound = Integer.parseInt(args[i+1]);
+            if (args[i].equals("-HB")) {
+                config.upperLengthBound = Integer.parseInt(args[i + 1]);
                 config.isUpperFilter = true;
                 continue;
             }
-            if(args[i].equals("-e"))
-            {
-                config.sigma =Double.parseDouble(args[i+1]);
+            if (args[i].equals("-e")) {
+                config.sigma = Double.parseDouble(args[i + 1]);
                 continue;
             }
-            if(args[i].equals("-ML"))
-            {
-                config.minChainLength = Integer.parseInt(args[i+1]);
+            if (args[i].equals("-ML")) {
+                config.minChainLength = Integer.parseInt(args[i + 1]);
                 continue;
             }
-            if(args[i].equals("-ALL"))
-            {
+            if (args[i].equals("-ALL")) {
                 config.cutByAverage = false;
                 continue;
             }
 
-            if(args[i].equals("-s"))
-            {
-                config.maxStage = Integer.parseInt(args[i+1]);
-                continue;
+            if (args[i].equals("-s")) {
+                config.maxStage = Integer.parseInt(args[i + 1]);
             }
         }
 
@@ -80,13 +71,12 @@ public class Main {
 
     }
 
-    public void run(FastaEntry oneEntry, Config _config) {
+    public void run(FastaEntry oneEntry, Config config) {
 
-        Config config = _config;
         OutputManager outputManager = new OutputManager();
         RuntimeAdapter runtimeAdapter = new RuntimeAdapterBuilder().version(1).build();
 
-        /**
+        /*
          * oneEntry is passed entry with its name and cain. we wat to pass only chain
          * Stage 1 because it is starting node
          * we need to supply initial length by using its length
@@ -97,15 +87,15 @@ public class Main {
         RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0, 0, config);
 
 
-        /**
+        /*
          * Array with end nodes (leafs)
          */
         ArrayList<RnaNode> outputFull = new ArrayList<>();
-        /**
+        /*
          * Array with element to process
          */
         ArrayList<RnaNode> toProcess = new ArrayList<>();
-        /**
+        /*
          * Array with currently found next nodes
          */
         ArrayList<RnaNode> toProcessPartial = new ArrayList<>();
@@ -113,8 +103,8 @@ public class Main {
 //        Adding first element to processing array
         toProcess.add(startNode);
 
-//
-        int stage = 1;
+//        To count stages
+        int stage = 0;
 
 //        Measuring processing time
         long startTime = System.currentTimeMillis();
@@ -133,7 +123,7 @@ public class Main {
             }
             toProcess = toProcessPartial;
             toProcessPartial = new ArrayList<>();
-            if (config.maxStage!=0 && stage >= config.maxStage ) {
+            if (config.maxStage != 0 && stage >= config.maxStage) {
                 outputFull.addAll(toProcess);
                 break;
             }
@@ -165,17 +155,16 @@ public class Main {
         System.out.println("Initial chain length: " + oneEntry.chain.length());
         System.out.println("Number of found degradants: " + outputFull.size());
 
+//        Saving raw data
         runtimeAdapter.saveOutput(oneEntry, outputManager.sortByMi(outputFull), config.folder_path, "");
 
-        if(config.isLowerFilter)
-        {
-            if(config.isUpperFilter)
-            {
-                outputFull = outputManager.filterByLength(outputFull,config.lowerLengthBound, config.upperLengthBound);
+//        using filters
+        if (config.isLowerFilter) {
+            if (config.isUpperFilter) {
+                outputFull = outputManager.filterByLength(outputFull, config.lowerLengthBound, config.upperLengthBound);
                 runtimeAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_both_bound");
-            }
-            else {
-                outputFull = outputManager.filterByLength(outputFull,config.lowerLengthBound);
+            } else {
+                outputFull = outputManager.filterByLength(outputFull, config.lowerLengthBound);
                 runtimeAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_lower_bound");
             }
         }
