@@ -202,12 +202,12 @@ public class RnaNode {
 
     @Override
     public String toString() {
-        return "RnaNode{" +
-                "chain='" + chain + '\'' +
-                ", stage=" + stage +
-                ", prevChainLength=" + prevChainLength +
-                ", prevMiMeasure=" + prevMiMeasure +
-                ", index=" + index +
+        return "{" +
+                "\"chain\" : \"" + chain + '\"' +
+                ", \"stage\" : " + stage +
+                ", \"prevChainLength\" : " + prevChainLength +
+                ", \"prevMiMeasure\" : " + prevMiMeasure +
+                ", \"index\" : " + index +
                 "}\n";
     }
 

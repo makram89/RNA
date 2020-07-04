@@ -3,6 +3,7 @@ package utils;
 import models.FastaEntry;
 import models.RNASingleChain;
 import models.RnaNode;
+import models.SequenceContainer;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -186,10 +187,16 @@ public class ScriptsAdapter {
 
             writer.write(entry_params.name + "\n");
             writer.write(entry_params.chain + "\n");
+
+            writer.write("["+ "\n");
+
             for( RnaNode node : outputNodes)
             {
                 writer.write(node.toString());
+                writer.write(",");
             }
+            writer.write("]"+ "\n");
+
             writer.close();
         }
         catch (IOException e)
@@ -215,11 +222,13 @@ public class ScriptsAdapter {
 
             writer.write(entry_params.name + "\n");
             writer.write(entry_params.chain + "\n");
-
+            writer.write("["+ "\n");
             for( SequenceContainer node : summarizedNodes)
             {
                 writer.write(node.toString());
+                writer.write(",");
             }
+            writer.write("]"+ "\n");
             writer.close();
         }
         catch (IOException e)

@@ -1,10 +1,10 @@
 package utils;
 
 import models.RnaNode;
+import models.SequenceContainer;
 import utils.sorters.MiSorter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
