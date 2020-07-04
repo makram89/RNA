@@ -84,7 +84,7 @@ public class Main {
 
         Config config = _config;
         OutputManager outputManager = new OutputManager();
-        ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
+        RuntimeAdapter runtimeAdapter = new RuntimeAdapterBuilder().version(1).build();
 
         /**
          * oneEntry is passed entry with its name and cain. we wat to pass only chain
@@ -165,22 +165,22 @@ public class Main {
         System.out.println("Initial chain length: " + oneEntry.chain.length());
         System.out.println("Number of found degradants: " + outputFull.size());
 
-        scriptsAdapter.saveOutput(oneEntry, outputManager.sortByMi(outputFull), config.folder_path, "");
+        runtimeAdapter.saveOutput(oneEntry, outputManager.sortByMi(outputFull), config.folder_path, "");
 
         if(config.isLowerFilter)
         {
             if(config.isUpperFilter)
             {
                 outputFull = outputManager.filterByLength(outputFull,config.lowerLengthBound, config.upperLengthBound);
-                scriptsAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_both_bound");
+                runtimeAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_both_bound");
             }
             else {
                 outputFull = outputManager.filterByLength(outputFull,config.lowerLengthBound);
-                scriptsAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_lower_bound");
+                runtimeAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_lower_bound");
             }
         }
 
-        scriptsAdapter.saveSummary(oneEntry, outputManager.countOcurrencies(outputFull), config.folder_path);
+        runtimeAdapter.saveSummary(oneEntry, outputManager.countOcurrencies(outputFull), config.folder_path);
 
 
     }

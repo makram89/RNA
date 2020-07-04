@@ -1,8 +1,8 @@
 package models;
 
 import utils.Config;
-import utils.ScriptsAdapter;
-import utils.ScriptsAdapterBuilder;
+import utils.RuntimeAdapter;
+import utils.RuntimeAdapterBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,9 +39,9 @@ public class RnaNode {
     private final Double prevMiMeasure;
 
     /**
-     * @see utils.ScriptsAdapter
+     * @see RuntimeAdapter
      */
-    private final ScriptsAdapter scriptsAdapter;
+    private final RuntimeAdapter runtimeAdapter;
 
     /**
      * Is this node end Node (leaf)
@@ -74,7 +74,7 @@ public class RnaNode {
         this.prevMiMeasure = prevMiMeasure;
         this.index = _index;
         this.config = _config;
-        scriptsAdapter = new ScriptsAdapterBuilder().version(config.version).build();
+        runtimeAdapter = new RuntimeAdapterBuilder().version(config.version).build();
 
 
     }
@@ -90,10 +90,10 @@ public class RnaNode {
         } else {
             try {
 
-                scriptsAdapter.createHelpFile(config.fasta_entry_file, chain);
-                scriptsAdapter.predictStructure();
+                runtimeAdapter.createHelpFile(config.fasta_entry_file, chain);
+                runtimeAdapter.predictStructure();
 
-                ArrayList<RNASingleChain> rnaSingleChains = scriptsAdapter.getSingleChains();
+                ArrayList<RNASingleChain> rnaSingleChains = runtimeAdapter.getSingleChains();
 //                System.out.println(rnaSingleChains.toString());
                 for (RNASingleChain fragment : rnaSingleChains) {
                     findCutPlaces(fragment);

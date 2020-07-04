@@ -12,8 +12,8 @@ public class SequenceContainer implements Comparable<SequenceContainer> {
 
     @Override
     public String toString() {
-        return "\"SEQ\" : \"" + chain + '\"' +
-                " \"occurred\" : " + counter + "\n" ;
+        return "{\"SEQ\" : \"" + chain + "\"," +
+                " \"occurred\" : " + counter + "}\n" ;
 
     }
 

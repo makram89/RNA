@@ -3,20 +3,20 @@ package utils;
 /**
  * Scripts adapter builder
  */
-public class ScriptsAdapterBuilder {
+public class RuntimeAdapterBuilder {
 
     private Integer _version;
 
-    public ScriptsAdapterBuilder()
+    public RuntimeAdapterBuilder()
     {
 //        If nothing overwrite it, its stays at 1
         _version = 1;
     }
-    public ScriptsAdapter build(){
+    public RuntimeAdapter build(){
 
-        return new ScriptsAdapter(_version);
+        return new RuntimeAdapter(_version);
     }
-    public ScriptsAdapterBuilder version(int ver)
+    public RuntimeAdapterBuilder version(int ver)
     {
         _version = ver;
         return this;

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * <li> Using outsourced functions </li>
  * </ul>
  */
-public class ScriptsAdapter {
+public class RuntimeAdapter {
 
     public String[] ScriptName = {"RNAfold", "RNACentroid"};
 
@@ -28,7 +28,7 @@ public class ScriptsAdapter {
 
     private final Config config;
 
-    ScriptsAdapter(int ver) {
+    RuntimeAdapter(int ver) {
         config = new Config();
         version = ver;
     }
@@ -190,10 +190,18 @@ public class ScriptsAdapter {
 
             writer.write("["+ "\n");
 
+            boolean flag = false;
             for( RnaNode node : outputNodes)
             {
+                if (flag){
+                    writer.write(",");
+                }
+                else
+                {
+                    flag = true;
+                }
                 writer.write(node.toString());
-                writer.write(",");
+
             }
             writer.write("]"+ "\n");
 
@@ -223,10 +231,18 @@ public class ScriptsAdapter {
             writer.write(entry_params.name + "\n");
             writer.write(entry_params.chain + "\n");
             writer.write("["+ "\n");
+            boolean flag = false;
             for( SequenceContainer node : summarizedNodes)
             {
+                if (flag){
+                    writer.write(",");
+                }
+                else
+                {
+                    flag = true;
+                }
                 writer.write(node.toString());
-                writer.write(",");
+
             }
             writer.write("]"+ "\n");
             writer.close();
