@@ -172,9 +172,9 @@ public class ScriptsAdapter {
         }
     }
 
-    public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir)
+    public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir, String subtitle)
     {
-        String pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1);
+        String pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1) + subtitle;
 
         try {
             createDirectory(dir);

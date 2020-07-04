@@ -48,11 +48,13 @@ public final class Config {
      */
     public int version = 1;
 
-    boolean isLowerFilter = false;
-    boolean isUpperFilter = false;
+    public boolean isLowerFilter = false;
+    public boolean isUpperFilter = false;
 
-    boolean cutByAverage = true;
+    public boolean cutByAverage = true;
 
+
+    public int maxStage = 0;
 
     public Config() {
     }

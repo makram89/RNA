@@ -9,29 +9,80 @@ public class Main {
 
     public static void main(String[] args) {
 
+        FastaHandler fastaHandler = new FastaHandler(args[0]);
+//        FastaHandler fastaHandler = new FastaHandler("found_pre_mirs2.fasta");
 
-        FastaHandler fastaHandler = new FastaHandler("found_pre_mirs.fasta");
+        Config config = new Config();
 
-//        FastaEntry oneEntry = fastaHandler.getEntry(0);
-//        System.out.println(oneEntry.toString());
+        /**
+         * -v version default 1, 0 changes from RNAfold to ContextFold
+         * -ML minimal length of sequence to process, ex. -ML 15 means that sequences shorter then 15 becomes endNodes without processing
+         * -e set sigma (limit value)
+         * -LB lower bound of sequence length in post processing
+         * -HB higher bound of sequence length in post processing
+         * -ALL process all possibilities
+         * -s max level of stage
+         *
+         */
+        for (int i = 1; i < args.length; i++) {
+
+            if (args[i].equals("-v"))
+            {
+                if (Integer.parseInt(args[i+1]) == 0 )
+                {
+                    config.version = 0;
+                }
+                continue;
+            }
+            if(args[i].equals("-LB"))
+            {
+                config.lowerLengthBound = Integer.parseInt(args[i+1]);
+                config.isLowerFilter = true;
+                continue;
+            }
+            if(args[i].equals("-HB"))
+            {
+                config.upperLengthBound = Integer.parseInt(args[i+1]);
+                config.isUpperFilter = true;
+                continue;
+            }
+            if(args[i].equals("-e"))
+            {
+                config.sigma =Double.parseDouble(args[i+1]);
+                continue;
+            }
+            if(args[i].equals("-ML"))
+            {
+                config.minChainLength = Integer.parseInt(args[i+1]);
+                continue;
+            }
+            if(args[i].equals("-ALL"))
+            {
+                config.cutByAverage = false;
+                continue;
+            }
+
+            if(args[i].equals("-s"))
+            {
+                config.maxStage = Integer.parseInt(args[i+1]);
+                continue;
+            }
+        }
 
         Main main = new Main();
 
-        for(FastaEntry entry : fastaHandler.getEntries())
-        {
+        for (FastaEntry entry : fastaHandler.getEntries()) {
+
             System.out.println(entry.toString());
-            main.run(entry);
+            main.run(entry, config);
         }
-
-
 
 
     }
 
-    public void run( FastaEntry oneEntry)
-    {
+    public void run(FastaEntry oneEntry, Config _config) {
 
-        final Config config = new Config();
+        Config config = _config;
         OutputManager outputManager = new OutputManager();
         ScriptsAdapter scriptsAdapter = new ScriptsAdapterBuilder().version(1).build();
 
@@ -55,7 +106,7 @@ public class Main {
          */
         ArrayList<RnaNode> toProcess = new ArrayList<>();
         /**
-         * Array
+         * Array with currently found next nodes
          */
         ArrayList<RnaNode> toProcessPartial = new ArrayList<>();
 
@@ -69,15 +120,24 @@ public class Main {
         long startTime = System.currentTimeMillis();
 
         while (toProcess.size() > 0) {
+            System.out.println("Tree level:" + stage);
+            stage++;
+            System.out.println("Nodes to process: " + toProcess.size());
             for (RnaNode rnaNode : toProcess) {
                 rnaNode.process();
                 toProcessPartial.addAll(rnaNode.getNext());
                 if (rnaNode.isEndNode()) {
-                    outputFull.add(rnaNode.getOutput()); }
+                    outputFull.add(rnaNode.getOutput());
+                }
 
             }
             toProcess = toProcessPartial;
             toProcessPartial = new ArrayList<>();
+            if (config.maxStage!=0 && stage >= config.maxStage ) {
+                outputFull.addAll(toProcess);
+                break;
+            }
+
         }
         double elapsedTime = System.currentTimeMillis() - startTime;
 
@@ -105,15 +165,22 @@ public class Main {
         System.out.println("Initial chain length: " + oneEntry.chain.length());
         System.out.println("Number of found degradants: " + outputFull.size());
 
+        scriptsAdapter.saveOutput(oneEntry, outputManager.sortByMi(outputFull), config.folder_path, "");
 
-        scriptsAdapter.saveOutput(oneEntry, outputManager.sortByMi(outputFull), config.folder_path);
-
-//        scriptsAdapter.saveOutput(oneEntry, outputManager.filterByLength(outputFull,config.lowerLengthBound), config.folder_path);
+        if(config.isLowerFilter)
+        {
+            if(config.isUpperFilter)
+            {
+                outputFull = outputManager.filterByLength(outputFull,config.lowerLengthBound, config.upperLengthBound);
+                scriptsAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_both_bound");
+            }
+            else {
+                outputFull = outputManager.filterByLength(outputFull,config.lowerLengthBound);
+                scriptsAdapter.saveOutput(oneEntry, outputFull, config.folder_path, "_lower_bound");
+            }
+        }
 
         scriptsAdapter.saveSummary(oneEntry, outputManager.countOcurrencies(outputFull), config.folder_path);
-
-
-
 
 
     }
