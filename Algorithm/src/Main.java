@@ -1,7 +1,6 @@
-import utils.*;
 import models.FastaEntry;
 import models.RnaNode;
-
+import utils.*;
 
 import java.util.ArrayList;
 
@@ -177,7 +176,7 @@ public class Main {
         }
 
         runtimeAdapter.saveSummary(oneEntry, outputManager.countOcurrencies(outputFull), config.folder_path);
-
+        runtimeAdapter.deleteFiles();
 
     }
 }

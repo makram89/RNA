@@ -14,6 +14,8 @@ Example files contain output from programs. Name of file accords to the name of 
 
 
 
+
+
 Algorithm
 
 In order to work, without IDE, structure should look like this:<br>

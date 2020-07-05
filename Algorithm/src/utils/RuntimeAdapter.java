@@ -63,8 +63,7 @@ public class RuntimeAdapter {
                     case 2:
                         tempObject.sequence = ret;
                         break;
-                    case 0:
-                        {
+                    case 0: {
                         final Pattern patern = Pattern.compile("[0-9]+");
                         CharSequence input;
                         Matcher m = patern.matcher(ret);
@@ -98,22 +97,18 @@ public class RuntimeAdapter {
 //        Process p = Runtime.getRuntime().exec("RNAfold ./src/found_pre_mirs.fasta --noPS -otemp.txt");
 
         createFile(config.dot_bracket_file);
-        if(config.version ==1) {
+        if (config.version == 1) {
             String command = "RNAfold ";
             String arg1 = " --noPS ";
             String arg2 = config.fasta_entry_file;
             String arg3 = "-o" + config.dot_bracket_file;
             Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
-        }
-        else if (config.version ==0)
-        {
+        } else if (config.version == 0) {
             System.out.println("ContextFOld not implemented, yet");
         }
 
 
     }
-
-
 
 
     public void createFile(String fileName) throws IOException {
@@ -158,8 +153,7 @@ public class RuntimeAdapter {
 
     }
 
-    public void createDirectory(String fileName)
-    {
+    public void createDirectory(String fileName) {
         File theDir = new File(fileName);
 
 // if the directory does not exist, create it
@@ -167,26 +161,24 @@ public class RuntimeAdapter {
             System.out.println("creating directory: " + theDir.getName());
             boolean result = false;
 
-            try{
+            try {
                 theDir.mkdir();
                 result = true;
-            }
-            catch(SecurityException se){
+            } catch (SecurityException se) {
                 //handle it
             }
-            if(result) {
+            if (result) {
                 System.out.println("DIR created");
             }
         }
     }
 
-    public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir, String subtitle)
-    {
-        String pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1) + subtitle;
+    public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir, String subtitle) {
+        String pathFile = dir + "/" + entry_params.name.substring(1) + "/" + entry_params.name.substring(1) + subtitle;
 
         try {
             createDirectory(dir);
-            createDirectory(dir + "/"+entry_params.name.substring(1));
+            createDirectory(dir + "/" + entry_params.name.substring(1));
 
             createFile(pathFile);
             File file = new File(pathFile);
@@ -195,41 +187,35 @@ public class RuntimeAdapter {
 //            writer.write(entry_params.name + "\n");
 //            writer.write(entry_params.chain + "\n");
 
-            writer.write("["+ "\n");
+            writer.write("[" + "\n");
 
             boolean flag = false;
-            for( RnaNode node : outputNodes)
-            {
-                if (flag){
+            for (RnaNode node : outputNodes) {
+                if (flag) {
                     writer.write(",");
-                }
-                else
-                {
+                } else {
                     flag = true;
                 }
                 writer.write(node.toString());
 
             }
-            writer.write("]"+ "\n");
+            writer.write("]" + "\n");
 
             writer.close();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Error with saving");
             e.printStackTrace();
         }
 
     }
 
-    public void saveSummary(FastaEntry entry_params, ArrayList<SequenceContainer> summarizedNodes , String dir)
-    {
-        String pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1);
+    public void saveSummary(FastaEntry entry_params, ArrayList<SequenceContainer> summarizedNodes, String dir) {
+        String pathFile = dir + "/" + entry_params.name.substring(1) + "/" + entry_params.name.substring(1);
 
         try {
             createDirectory(dir);
-            createDirectory(dir + "/"+entry_params.name.substring(1));
-            pathFile = dir + "/" +entry_params.name.substring(1)+"/"+entry_params.name.substring(1)+"_summary";
+            createDirectory(dir + "/" + entry_params.name.substring(1));
+            pathFile = dir + "/" + entry_params.name.substring(1) + "/" + entry_params.name.substring(1) + "_summary";
 
             createFile(pathFile);
             File file = new File(pathFile);
@@ -238,28 +224,37 @@ public class RuntimeAdapter {
 //            writer.write(entry_params.name + "\n");
 //            writer.write(entry_params.chain + "\n");
 
-            writer.write("["+ "\n");
+            writer.write("[" + "\n");
             boolean flag = false;
-            for( SequenceContainer node : summarizedNodes)
-            {
-                if (flag){
+            for (SequenceContainer node : summarizedNodes) {
+                if (flag) {
                     writer.write(",");
-                }
-                else
-                {
+                } else {
                     flag = true;
                 }
                 writer.write(node.toString());
             }
-            writer.write("]"+ "\n");
+            writer.write("]" + "\n");
             writer.close();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Error with saving");
             e.printStackTrace();
         }
     }
 
+    public void deleteFiles() {
+        try {
+            File f1 = new File(config.fasta_entry_file);           //file to be delete
+            File f2 = new File(config.dot_bracket_file);           //file to be delete
+            f1.delete();
+            f2.delete();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
+
+
+
