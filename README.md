@@ -13,3 +13,20 @@ Version option is use to switch between RNAFold and ContextFold output. Default 
 Example files contain output from programs. Name of file accords to the name of the used program.
 
 
+
+Algorithm
+
+In order to work, without IDE, structure should look like this:<br>
+
+
+-/out/ <br>
+  -Main.java <br>
+  -*other files* <br>
+-/scripts/ <br>
+  -rna_lines_extractor.py <br>
+
+out is name with compiled project <br>
+To run type (in "out" folder):  <br>
+java Main ./path/to/fasta/entry <br>
+
+
