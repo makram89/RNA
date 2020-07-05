@@ -54,7 +54,7 @@ public final class Config {
     public boolean cutByAverage = true;
 
 
-    public int maxStage = 0;
+    public int maxStage = -1;
 
     public Config() {
     }

@@ -25,7 +25,7 @@ public class Main {
          *
          */
         for (int i = 1; i < args.length; i++) {
-
+            System.out.println(args[i]);
             if (args[i].equals("-v")) {
                 if (Integer.parseInt(args[i + 1]) == 0) {
                     config.version = 0;
@@ -57,7 +57,14 @@ public class Main {
 
             if (args[i].equals("-s")) {
                 config.maxStage = Integer.parseInt(args[i + 1]);
+                continue;
             }
+            if (args[i].equals("-script")) {
+                config.python_script_path = args[i+1];
+            }
+
+
+
         }
 
         Main main = new Main();
@@ -123,7 +130,7 @@ public class Main {
             }
             toProcess = toProcessPartial;
             toProcessPartial = new ArrayList<>();
-            if (config.maxStage != 0 && stage >= config.maxStage) {
+            if (config.maxStage > 0 && stage >= config.maxStage) {
                 outputFull.addAll(toProcess);
                 break;
             }
