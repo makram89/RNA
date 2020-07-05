@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class FastaHandler {
 
-    private ArrayList<FastaEntry> entries = new ArrayList<>();
+    private final ArrayList<FastaEntry> entries = new ArrayList<>();
     private final String filePath;
 
     /**
@@ -39,7 +39,7 @@ public class FastaHandler {
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             String st;
-            String helper = new String("");
+            String helper = "";
             int lineNumber = 0;
             while ((st = br.readLine()) != null) {
 //                System.out.println(st);

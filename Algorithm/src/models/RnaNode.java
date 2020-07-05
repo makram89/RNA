@@ -6,7 +6,6 @@ import utils.RuntimeAdapterBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.Collections;
 
 /**
@@ -17,7 +16,7 @@ public class RnaNode {
     /**
      * Variable with config values
      */
-    private Config config;
+    private final Config config;
 
     /**
      * Input chain
