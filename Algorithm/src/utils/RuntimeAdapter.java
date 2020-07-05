@@ -100,13 +100,23 @@ public class RuntimeAdapter {
 //        Process p = Runtime.getRuntime().exec("RNAfold ./src/found_pre_mirs.fasta --noPS -otemp.txt");
 
         createFile(config.dot_bracket_file);
-        String command = "RNAfold ";
-        String arg1 = " --noPS ";
-        String arg2 = config.fasta_entry_file;
-        String arg3 = "-o" + config.dot_bracket_file;
+        if(config.version ==1) {
+            String command = "RNAfold ";
+            String arg1 = " --noPS ";
+            String arg2 = config.fasta_entry_file;
+            String arg3 = "-o" + config.dot_bracket_file;
+            Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
+        }
+        else if (config.version ==0)
+        {
+            System.out.println("ContextFOld not implemented, yet");
+        }
 
-        Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
+
     }
+
+
+
 
     public void createFile(String fileName) throws IOException {
 

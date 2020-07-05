@@ -27,6 +27,11 @@ public final class Config {
      */
     public String python_script_path = "../scripts/rna_lines_extractor.py";
 
+    /**
+     * Path to contextfold
+     */
+    public String context_fold = "../ContextFold_1_00/";
+
     public int minChainLength = 15;
     public double sigma = 0.01;
 
