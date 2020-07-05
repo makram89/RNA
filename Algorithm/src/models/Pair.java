@@ -1,7 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -9,12 +7,6 @@ import java.util.Hashtable;
  * Class that store mi values for nucleotides pairs
  */
 public final class Pair {
-
-    /**
-     *
-     * @deprecated
-     */
-    public ArrayList<String> possiblePairs;
 
     /**
      * Dict Pair-value
@@ -26,7 +18,6 @@ public final class Pair {
      * Constructor to initialize values
      */
     public Pair() {
-//        possiblePairs = new ArrayList<>(Arrays.asList("UA", "CA", "UC", "CC", "UG", "CG", "UU", "CU"));
         miValues = new Hashtable();
         miValues.put("UA", 0.953);
         miValues.put("CA", 0.932);

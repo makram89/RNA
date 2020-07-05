@@ -84,7 +84,6 @@ public class RnaNode {
     public void process() {
 
         if (chain.length() < config.minChainLength) {
-//            endNode.add(this);
             endNode = true;
         } else {
             try {
@@ -121,6 +120,7 @@ public class RnaNode {
             if (config.pairs.miValues.get(pair) != null) {
                 double mi = (double) config.pairs.miValues.get(pair);
                 mi = mi * prevMiMeasure;
+
 //                System.out.println("Mi value: " + mi );
 //              Choosing if place is good enough
                 if (mi >= config.sigma) {
@@ -129,7 +129,7 @@ public class RnaNode {
             }
         }
 
-//chosing only best options
+//choosing only best options
         Collections.sort(possibleCutsMi);
         double avrg = 0;
         for (NucleotidesBinding element : possibleCutsMi)

@@ -22,8 +22,6 @@ import java.util.regex.Pattern;
  */
 public class RuntimeAdapter {
 
-    public String[] ScriptName = {"RNAfold", "RNACentroid"};
-
     public Integer version;
 
     private final Config config;
@@ -146,7 +144,6 @@ public class RuntimeAdapter {
         try {
 
             writer = new BufferedWriter(new FileWriter(file));
-//            writer.write(nChain + "\n" + dotChain);
             writer.write(nChain + "\n");
         } catch (Exception e) {
             e.printStackTrace();
@@ -253,7 +250,6 @@ public class RuntimeAdapter {
                     flag = true;
                 }
                 writer.write(node.toString());
-
             }
             writer.write("]"+ "\n");
             writer.close();
