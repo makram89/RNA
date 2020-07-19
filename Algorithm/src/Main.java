@@ -81,16 +81,16 @@ public class Main {
 
         OutputManager outputManager = new OutputManager();
         RuntimeAdapter runtimeAdapter = new RuntimeAdapterBuilder().version(1).build();
-
+//TODO zmiana mi + stage
         /*
          * oneEntry is passed entry with its name and cain. we wat to pass only chain
-         * Stage 1 because it is starting node
+         * Stage 0 because it is starting node and there is no
          * we need to supply initial length by using its length
-         * start mi should be 1
+         * start mi should be 1, but could be changed (in future)
          * index 0, because it is start
          * config file with all chosen options
          */
-        RnaNode startNode = new RnaNode(oneEntry.chain, 1, oneEntry.chain.length(), 1.0, 0, config);
+        RnaNode startNode = new RnaNode(oneEntry.chain, 0, oneEntry.chain.length(), 1.0, 0, config);
 
 
         /*
@@ -129,7 +129,7 @@ public class Main {
             }
             toProcess = toProcessPartial;
             toProcessPartial = new ArrayList<>();
-            if (config.maxStage > 0 && stage >= config.maxStage) {
+            if (config.maxStage > 0 && stage > config.maxStage) {
                 outputFull.addAll(toProcess);
                 break;
             }
