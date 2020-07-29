@@ -1,6 +1,9 @@
 import models.FastaEntry;
 import models.RnaNode;
-import utils.*;
+import utils.Config;
+import utils.FastaHandler;
+import utils.OutputManager;
+import utils.RuntimeAdapter;
 
 import java.util.ArrayList;
 
@@ -80,7 +83,8 @@ public class Main {
     public void run(FastaEntry oneEntry, Config config) {
 
         OutputManager outputManager = new OutputManager();
-        RuntimeAdapter runtimeAdapter = new RuntimeAdapterBuilder().version(1).build();
+        RuntimeAdapter runtimeAdapter = new RuntimeAdapter(config);
+
 //TODO zmiana mi + stage
         /*
          * oneEntry is passed entry with its name and cain. we wat to pass only chain

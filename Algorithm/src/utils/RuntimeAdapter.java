@@ -22,13 +22,12 @@ import java.util.regex.Pattern;
  */
 public class RuntimeAdapter {
 
-    public Integer version;
 
     private final Config config;
 
-    RuntimeAdapter(int ver) {
-        config = new Config();
-        version = ver;
+    public RuntimeAdapter(Config _config) {
+        config = _config;
+
     }
 
 
@@ -46,7 +45,15 @@ public class RuntimeAdapter {
 //            String command = "./src/rna_lines_extractor.py ";
             String arg = config.dot_bracket_file;
 
-            Process p = Runtime.getRuntime().exec("python3 " + command + " " + arg);
+            Process p;
+            if(config.version ==0)
+            {
+                p = Runtime.getRuntime().exec("python3 " + command + " " + arg + " -v 0");
+            }
+            else
+            {
+                p = Runtime.getRuntime().exec("python3 " + command + " " + arg);
+            }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -96,18 +103,22 @@ public class RuntimeAdapter {
 
 //        Process p = Runtime.getRuntime().exec("RNAfold ./src/found_pre_mirs.fasta --noPS -otemp.txt");
 
+
         createFile(config.dot_bracket_file);
         if (config.version == 1) {
             String command = "RNAfold ";
-            String arg1 = " --noPS ";
-            String arg2 = config.fasta_entry_file;
+            String arg1 = config.fasta_entry_file;
+            String arg2 = " --noPS ";
             String arg3 = "-o" + config.dot_bracket_file;
-            Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
+            Process p = Runtime.getRuntime().exec(command + arg1 + arg2 + arg3);
+
         } else if (config.version == 0) {
-            System.out.println("ContextFOld not implemented, yet");
+            String command = "java -cp ";
+            String arg1 = config.contextFoldPath + "bin";
+            String arg2 = "in:" + config.fasta_entry_file;
+            String arg3 = "out:" + config.dot_bracket_file;
+            Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
         }
-
-
     }
 
 
@@ -123,6 +134,7 @@ public class RuntimeAdapter {
 
             try (FileChannel outChan = new FileOutputStream(file, true).getChannel()) {
                 outChan.truncate(0);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -133,6 +145,7 @@ public class RuntimeAdapter {
     public void createHelpFile(String fileName, String nChain) throws IOException {
 
         createFile(fileName);
+
         File file = new File(fileName);
 
         BufferedWriter writer = null;

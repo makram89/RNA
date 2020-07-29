@@ -2,7 +2,6 @@ package models;
 
 import utils.Config;
 import utils.RuntimeAdapter;
-import utils.RuntimeAdapterBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public class RnaNode {
         this.prevMiMeasure = prevMiMeasure;
         this.index = _index;
         this.config = _config;
-        runtimeAdapter = new RuntimeAdapterBuilder().version(config.version).build();
+        runtimeAdapter = new RuntimeAdapter(config);
 
 
     }

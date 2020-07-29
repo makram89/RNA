@@ -30,7 +30,7 @@ public final class Config {
     /**
      * Path to contextfold
      */
-    public String context_fold = "../ContextFold_1_00/";
+    public String contextFoldPath = "../ContextFold_1_00/";
 
     public int minChainLength = 15;
     public double sigma = 0.01;
@@ -60,6 +60,7 @@ public final class Config {
 
 
     public int maxStage = -1;
+
 
     public Config() {
     }
