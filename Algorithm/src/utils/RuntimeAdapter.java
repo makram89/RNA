@@ -46,9 +46,17 @@ public class RuntimeAdapter {
             String arg = config.dot_bracket_file;
 
             Process p;
-            if(config.version ==0)
+            if(config.version == 0)
             {
-                p = Runtime.getRuntime().exec("python3 " + command + " " + arg + " -v 0");
+                System.out.println("python3 " + command + " " + arg + " -v 0" );
+                p = Runtime.getRuntime().exec("python3 " + command + " " + arg + " -v 0" );
+                String line;
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(p.getInputStream()) );
+                while ((line = in.readLine()) != null) {
+                    System.out.println(line);
+                }
+                in.close();
             }
             else
             {
@@ -114,10 +122,22 @@ public class RuntimeAdapter {
 
         } else if (config.version == 0) {
             String command = "java -cp ";
-            String arg1 = config.contextFoldPath + "bin";
+            String arg1 = config.contextFoldPath + "bin ";
             String arg2 = "in:" + config.fasta_entry_file;
-            String arg3 = "out:" + config.dot_bracket_file;
-            Process p = Runtime.getRuntime().exec(command + arg2 + arg1 + arg3);
+            String arg3 = " out:" + config.dot_bracket_file;
+            String arg4 = "contextFold.app.Predict ";
+            String arg5 = " model:" + config.contextFoldPath + "trained/StHighCoHigh.model";
+
+//            System.out.println(command + arg1 + arg4+ arg2 + arg3 + arg5);
+
+            Process p = Runtime.getRuntime().exec(command + arg1 + arg4+ arg2 + arg3 + arg5);
+//            String line;
+//            BufferedReader in = new BufferedReader(
+//                    new InputStreamReader(p.getInputStream()) );
+//            while ((line = in.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//            in.close();
         }
     }
 
