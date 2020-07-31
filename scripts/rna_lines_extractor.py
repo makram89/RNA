@@ -16,7 +16,7 @@ class SingularChain:
 class FullRNA:
     # v=0 ->dla wyników z ContextFold bez konieczności usuwania ostaatnich dwóch nawiasów
     # v=1 ->dla wyników z RNAFold ( wymaga usunięcia ostaniego nawiasu)
-    def __init__(self, input_file, v=1, output_file=False):
+    def __init__(self, input_file, v=0, output_file=False):
         self.version = v
         self.rna_chain_array = []
         self.rna_dot_bracket_seq = []
@@ -39,6 +39,7 @@ class FullRNA:
                     self.rna_dot_bracket_seq = self.trim(line[:-1])
                 else:
                     self.rna_dot_bracket_seq = line[:-1]
+#                 print(self.rna_dot_bracket_seq)
 
                 # Break jest potrzebny ze względu na dodatkową linie w wyniku ContextFold
                 # Jeśli pojawią się bardziej zaawansofane formaty, będzie trzeba to poprawić
@@ -59,7 +60,9 @@ class FullRNA:
         dot = False
         for i, value in enumerate(self.rna_dot_bracket_seq):
             if dot:
-                if value == '.':
+                if value == '.' and i == len(self.rna_dot_bracket_seq) - 1:
+                    last_idx = i
+                elif value =='.':
                     continue
                 elif i == len(self.rna_dot_bracket_seq) - 1:
                     last_idx = i
@@ -96,6 +99,6 @@ def main(argv):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file')
-    parser.add_argument('-v', '--version', type=int, default=1, choices=[0, 1, 2])
+    parser.add_argument('-v', '--version', type=int, default=0, choices=[0, 1, 2])
     args = parser.parse_args()
     main(args)

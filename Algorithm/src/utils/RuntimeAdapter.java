@@ -48,27 +48,21 @@ public class RuntimeAdapter {
             Process p;
             if(config.version == 0)
             {
-                System.out.println("python3 " + command + " " + arg + " -v 0" );
                 p = Runtime.getRuntime().exec("python3 " + command + " " + arg + " -v 0" );
-                String line;
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(p.getInputStream()) );
-                while ((line = in.readLine()) != null) {
-                    System.out.println(line);
-                }
-                in.close();
             }
             else
             {
-                p = Runtime.getRuntime().exec("python3 " + command + " " + arg);
+                p = Runtime.getRuntime().exec("python3 " + command + " " + arg + " -v 1");
             }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             RNASingleChain tempObject = new RNASingleChain();
 //            It reads first line and jumps to sec
+//            Pozwala przeskoczyć pierwszą linie
             String ret = in.readLine();
             int lineNumber = 1;
+//            Przetwarzanie wyjścia ze skryptu do obiektu
             while ((ret = in.readLine()) != null) {
 //                System.out.println(ret);
                 switch (lineNumber % 3) {
@@ -100,7 +94,7 @@ public class RuntimeAdapter {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.print("Bad luck!");
+            System.out.print("ERROR with python script procesing\n");
         }
 //        System.out.println(score.size());
         return score;
@@ -131,6 +125,13 @@ public class RuntimeAdapter {
 //            System.out.println(command + arg1 + arg4+ arg2 + arg3 + arg5);
 
             Process p = Runtime.getRuntime().exec(command + arg1 + arg4+ arg2 + arg3 + arg5);
+
+            try {
+                p.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                System.out.println("finishing prediction");
+            }
 //            String line;
 //            BufferedReader in = new BufferedReader(
 //                    new InputStreamReader(p.getInputStream()) );
