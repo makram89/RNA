@@ -82,20 +82,26 @@ public class RnaNode {
      */
     public void process() {
 
+        // Sprawdzenie warunku minimalnej długości sekwencji
         if (chain.length() < config.minChainLength) {
             endNode = true;
         } else {
             try {
 
+                // Stworzenie i wypełnienie potrzebnych plików
                 runtimeAdapter.createHelpFile(config.fasta_entry_file, chain);
+                // Uzyskanie struktury drugorzędowej
                 runtimeAdapter.predictStructure();
 
+                // Uzyskanie łańcuchów w których można szukać miejsc cięcia
                 ArrayList<RNASingleChain> rnaSingleChains = runtimeAdapter.getSingleChains();
 //                System.out.println(rnaSingleChains.toString());
+
+                // Wykonanie cięć i uzyskanie nowych węzłów
                 for (RNASingleChain fragment : rnaSingleChains) {
                     findCutPlaces(fragment);
-
                 }
+                // Przy braku nowych fragmentów, oznacznie siebie jako końcowy węzeł
                 if (nextRnaNodes.size() == 0) {
                     endNode = true;
                 }
@@ -120,15 +126,16 @@ public class RnaNode {
                 double mi = (double) config.pairs.miValues.get(pair);
                 mi = mi * prevMiMeasure;
 
-//                System.out.println("Mi value: " + mi );
-//              Choosing if place is good enough
+                // Choosing if place is good enough
+                // Sprawdzenie warunku mi
                 if (mi >= config.sigma) {
                     possibleCutsMi.add(new NucleotidesBinding(i, mi));
                 }
             }
         }
 
-//choosing only best options
+        // Choosing only best options
+        // Wybieranie tylko opcji o mi wyższym niż średnia w zestawieniu
         Collections.sort(possibleCutsMi);
         double avrg = 0;
         for (NucleotidesBinding element : possibleCutsMi)
@@ -140,22 +147,20 @@ public class RnaNode {
         {
 
             if (element.mi >= avrg) {
-                choose(element, fragment);
+                cutChain(element, fragment);
             }
             else break;
         }
 
-
-
-
     }
 
     /**
-     * Method to find best cut
+     * Method creating two potential nodes
+     * Metoda tworzy dwa potencjalne węzły
      * @param info chosen place to cut
      * @param fragment whole fragment
      */
-    public void choose(NucleotidesBinding info, RNASingleChain fragment) {
+    public void cutChain(NucleotidesBinding info, RNASingleChain fragment) {
 
         String nodeChain1 = chain.substring(0, info.i + fragment.indexes[0]);
         String nodeChain2 = chain.substring(info.i + fragment.indexes[0]);
@@ -198,6 +203,8 @@ public class RnaNode {
         return endNode;
     }
 
+
+//    Formatowanie zgodne z JSON do zapisu w pliku i umożliwenia dalszego przetwarzania
     @Override
     public String toString() {
         return "{" +

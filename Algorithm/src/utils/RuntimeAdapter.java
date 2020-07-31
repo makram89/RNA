@@ -207,6 +207,13 @@ public class RuntimeAdapter {
         }
     }
 
+    /**
+     * Metoda do zapisu wyniku
+     * @param entry_params
+     * @param outputNodes
+     * @param dir
+     * @param subtitle
+     */
     public void saveOutput(FastaEntry entry_params, ArrayList<RnaNode> outputNodes, String dir, String subtitle) {
         String pathFile = dir + "/" + entry_params.name.substring(1) + "/" + entry_params.name.substring(1) + subtitle;
 

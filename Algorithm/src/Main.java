@@ -5,6 +5,10 @@ import utils.FastaHandler;
 import utils.OutputManager;
 import utils.RuntimeAdapter;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
@@ -15,7 +19,9 @@ public class Main {
 //        FastaHandler fastaHandler = new FastaHandler("found_pre_mirs2.fasta");
 
         Config config = new Config();
+        Main main = new Main();
 
+//TODO  możliwość ustawienia początkowego mi i staege w celu przetworzenia dla konkretnego fragmentu
         /*
          * -v version default 1, 0 changes from RNAfold to ContextFold
          * -ML minimal length of sequence to process, ex. -ML 15 means that sequences shorter then 15 becomes endNodes without processing
@@ -23,14 +29,29 @@ public class Main {
          * -LB lower bound of sequence length in post processing
          * -HB higher bound of sequence length in post processing
          * -ALL process all possibilities
-         * -s max level of stage
+         * -s max level of stage. Ex. -s 4, includes stage 4
          *
+         */
+
+        /*
+         * -v domyślnie v =1, v= 0 oznacza użycie ContextFold, v=1 RNAFold
+         * -ML minimalnia długość przetwarzanego łańcucha. -ML 15 oznacza że krótszy niż 15 znaków fragment nie będzie przetwarzany
+         * -e ustawienie minimalnej wartości sigma
+         * -LB ustawielnie dolnej granicy długości dla zbioru wynikowego
+         * -HB jak wyżej, ale górnej granicy
+         * -ALL algorytm nie przetwarza wszystkie możlwiości ( spełniające warunek długości i wartości sigma)
+         * -s maksymalny poziom przetwarzanych elementów. Przy -s 4, po przetworzeniu liści z poziomu 4 program zakończy działanie
          */
         for (int i = 1; i < args.length; i++) {
             System.out.println(args[i]);
             if (args[i].equals("-v")) {
                 if (Integer.parseInt(args[i + 1]) == 0) {
                     config.version = 0;
+                    String string = main.read_path();
+                    if (!string.isEmpty())
+                    {
+                        config.contextFoldPath = string;
+                    }
                 }
                 continue;
             }
@@ -69,8 +90,6 @@ public class Main {
 
         }
 
-        Main main = new Main();
-
         for (FastaEntry entry : fastaHandler.getEntries()) {
 
             System.out.println(entry.toString());
@@ -85,7 +104,6 @@ public class Main {
         OutputManager outputManager = new OutputManager();
         RuntimeAdapter runtimeAdapter = new RuntimeAdapter(config);
 
-//TODO zmiana mi + stage
         /*
          * oneEntry is passed entry with its name and cain. we wat to pass only chain
          * Stage 0 because it is starting node and there is no
@@ -119,6 +137,11 @@ public class Main {
 //        Measuring processing time
         long startTime = System.currentTimeMillis();
 
+        /*
+        Główna pętla przetwarzania
+        warunek zakończenia: brak węzłów do dalszego przetwarzania
+
+         */
         while (toProcess.size() > 0) {
             System.out.println("Tree level:" + stage);
             stage++;
@@ -131,8 +154,10 @@ public class Main {
                 }
 
             }
+//            Ustawienie węzłów do przetworzenia w następnej iteracji i wyczyszczenie tablicy
             toProcess = toProcessPartial;
             toProcessPartial = new ArrayList<>();
+            // Monitor zakończenia przetwarzania
             if (config.maxStage > 0 && stage > config.maxStage) {
                 outputFull.addAll(toProcess);
                 break;
@@ -183,5 +208,25 @@ public class Main {
         runtimeAdapter.deleteFiles();
 
     }
+
+    public String read_path()
+    {
+        File file = new File("./context_fold_path");
+        BufferedReader br = null;
+        String st = "";
+        try {
+            br = new BufferedReader(new FileReader(file));
+            st = br.readLine();
+            System.out.println(st);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return st;
+    }
+
+
+
 }
 

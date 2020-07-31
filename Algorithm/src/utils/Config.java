@@ -40,12 +40,12 @@ public final class Config {
     /**
      * For filtering
      */
-    public int lowerLengthBound = 5;
+    public int lowerLengthBound = 0;
 
     /**
      * for filtering
      */
-    public int upperLengthBound = 50;
+    public int upperLengthBound = 150;
 
     /**
      * ver
