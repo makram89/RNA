@@ -40,6 +40,10 @@ Domyślnie ustawienia:
 - Domyślnie program analizuje łańcuchy dla mi > 0.01 i długości większej lub równej 15.
 - W celu optytmalizacji przetwarzania, domyslnie program przetwarza tylko cześć uzyskanych potencjalnych łańcuchów. przy uzykaniu X mozliwych dalszych łańcuchów, liczona jest średnia wartość mi i do dalszego przetwarzania trafiają tylko te łańcuchy o mi wyższym lub równym tej wartości. 
 
+W celu ustawienia ścieżki do ContextFold należy w miejscu wywołania stowrzyć plik o nazwie "context_fold_path" zawierający ścieżke do folderu z contextfold. 
+Przy braku pliku, program spróbuje użyć domyślnej ściezki "../ContextFold_1_00/". Plik jest wymagany tylko przy uzywaniu ContextFolda.
+
+
 
 Program jest implementacją algorytmu przygotowanego przez dr. hab. inż. Agnieszkę Rybarczyk. 
 
