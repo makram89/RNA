@@ -1,4 +1,4 @@
-package utils.sorters;
+package utils;
 
 import models.RnaNode;
 

@@ -211,14 +211,16 @@ public class Main {
 
     public String read_path()
     {
-        File file = new File("./context_fold_path");
-        BufferedReader br = null;
+
         String st = "";
         try {
+            File file = new File("./context_fold_path");
+            BufferedReader br = null;
             br = new BufferedReader(new FileReader(file));
             st = br.readLine();
             System.out.println(st);
         } catch (IOException e) {
+            System.out.println("Propably thee is no file context_fold_path with path to ContextFold");
             e.printStackTrace();
         }
 

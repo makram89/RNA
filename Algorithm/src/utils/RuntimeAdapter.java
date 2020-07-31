@@ -100,6 +100,10 @@ public class RuntimeAdapter {
         return score;
     }
 
+    /**
+     * Wywołanie predykcji drugorzędowej, dostępne dwie wersje
+     * @throws IOException
+     */
     public void predictStructure() throws IOException {
 
 
@@ -143,6 +147,12 @@ public class RuntimeAdapter {
     }
 
 
+
+    /**
+     * Tworzenie jakiegokolwiek pustego pliku
+     * @param fileName
+     * @throws IOException
+     */
     public void createFile(String fileName) throws IOException {
 
         File file = new File(fileName);
@@ -163,6 +173,12 @@ public class RuntimeAdapter {
 
     }
 
+    /**
+     * Stworzenie pliku zawierającego sekwencje do przetworzenia dla skryptu pythonowego
+     * @param fileName
+     * @param nChain
+     * @throws IOException
+     */
     public void createHelpFile(String fileName, String nChain) throws IOException {
 
         createFile(fileName);
