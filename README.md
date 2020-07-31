@@ -31,4 +31,18 @@ out is name with compiled project <br>
 To run type (in "out" folder):  <br>
 java Main ./path/to/fasta/entry <br>
 
+# OPIS PL
+
+Domyślnie algorymt przyjmuje plik z sekwencją (lub sekwencjami, wtedy analizuje je oddzielnie po koleji) RNA,  w formacie FASTA. 
+Wyniki przetwarzania zapisywane są w folderze output_dir/nazwa_sekwencji/. 
+Domyślnie ustawienia:
+- RNAFold do predykcji struktury drugorzędowej
+- Domyślnie program analizuje łańcuchy dla mi > 0.01 i długości większej lub równej 15.
+- W celu optytmalizacji przetwarzania, domyslnie program przetwarza tylko cześć uzyskanych potencjalnych łańcuchów. przy uzykaniu X mozliwych dalszych łańcuchów, liczona jest średnia wartość mi i do dalszego przetwarzania trafiają tylko te łańcuchy o mi wyższym lub równym tej wartości. 
+
+
+Program jest implementacją algorytmu przygotowanego przez dr. hab. inż. Agnieszkę Rybarczyk. 
+
+
+
 
