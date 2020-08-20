@@ -1,5 +1,8 @@
 package models;
 
+/**
+ * Klasa do tworzenia pliku wyjściowego
+ */
 public class SequenceContainer implements Comparable<SequenceContainer> {
 
     public final String chain;

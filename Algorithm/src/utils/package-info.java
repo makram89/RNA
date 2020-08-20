@@ -1,5 +1,5 @@
 /**
-    Paczka zawiera clasy zawierające funkjcje umożliwiające obróbkę danych
+    Paczka zawiera clasy zawierające funkjcje umożliwiające obróbkę przetwarzanych danych
 
     @author github.com/makram89
  */

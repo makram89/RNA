@@ -4,6 +4,9 @@ import models.RnaNode;
 
 import java.util.Comparator;
 
+/**
+ * Używane do sortowania miejsc cięcia
+ */
 public class MiSorter implements Comparator<RnaNode> {
 
     @Override

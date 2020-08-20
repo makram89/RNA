@@ -21,7 +21,7 @@ public class Main {
         Config config = new Config();
         Main main = new Main();
 
-//TODO  możliwość ustawienia początkowego mi i staege w celu przetworzenia dla konkretnego fragmentu
+//TODO  możliwość ustawienia początkowego mi i stage w celu przetworzenia dla konkretnego fragmentu
         /*
          * -v version default 1, 0 changes from RNAfold to ContextFold
          * -ML minimal length of sequence to process, ex. -ML 15 means that sequences shorter then 15 becomes endNodes without processing

@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+    Klasa odpowiada za obróbkę wyników przetwarzania
+    W tym filtracje
+ */
 public class OutputManager {
 
 
