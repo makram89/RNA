@@ -152,8 +152,6 @@ public class RuntimeAdapter {
         }
     }
 
-
-
     /**
      * Tworzenie jakiegokolwiek pustego pliku
      * @param fileName

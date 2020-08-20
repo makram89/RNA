@@ -11,6 +11,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * -v version default 1, 0 changes from RNAfold to ContextFold
+ * -ML minimal length of sequence to process, ex. -ML 15 means that sequences shorter then 15 becomes endNodes without processing
+ * -e set sigma (limit value)
+ * -LB lower bound of sequence length in post processing
+ * -HB higher bound of sequence length in post processing
+ * -ALL process all possibilities
+ * -s max level of stage. Ex. -s 4, includes stage 4
+ *
+ */
 public class Main {
 
     public static void main(String[] args) {
