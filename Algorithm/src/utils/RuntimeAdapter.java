@@ -117,12 +117,15 @@ public class RuntimeAdapter {
             String arg2 = " --noPS ";
             String arg3 = "-o" + config.dot_bracket_file;
             Process p = Runtime.getRuntime().exec(command + arg1 + arg2 + arg3);
+
             try {
                 p.waitFor();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("finishing prediction");
             }
+
+
 
         } else if (config.version == 0) {
             String command = "java -cp ";
